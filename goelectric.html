@@ -59,6 +59,9 @@
                 <a class="pilltext" href="#driving" data-toggle="tab"><span class="glyphicon glyphicon-road iconpilltext"></span>&nbsp;Driving</a>
 		    </li>
 		    <li>
+                <a class="pilltext" href="#legend" data-toggle="tab"><span class="glyphicon glyphicon-list-alt iconpilltext"></span></a>
+		    </li>
+		    <li>
                 <a class="pilltext" href="#help" data-toggle="tab"><span class="glyphicon glyphicon-question-sign iconpilltext"></span></a>
 		    </li>
 		</ul>
@@ -164,6 +167,16 @@
         </div>
       </div>
 
+      <div class="tab-pane fade" id="legend">
+        <div class="well redwell">
+            <div class="titlewell">Legend</div>
+        </div>
+        <div class="well redwell">
+            <div id="legendDiv"></div>
+        </div>
+      </div>
+
+
       <!-- HELP PANEL -->
       <div class="tab-pane fade" id="help">
         <div class="well redwell">
@@ -238,6 +251,7 @@
            "esri/widgets/Sketch/SketchViewModel",
            "esri/Graphic",
            "esri/layers/GraphicsLayer",
+           "esri/widgets/Legend",
 
       // Bootstrap
            "bootstrap/Collapse",
@@ -261,7 +275,8 @@
              Draw,
              SketchViewModel,
              Graphic,
-             GraphicsLayer
+             GraphicsLayer,
+             Legend
            ) {
 
              /******************************************************************
@@ -369,8 +384,22 @@
              map.add(csvLayer);
 
 
-             /******* ADD POINTS ***********/
+             /******* ADD THINGS ***********/
              app.mapView.when(function () {
+
+                   var legend = new Legend({
+                    container: "legendDiv",
+                    view: app.mapView,
+                    layerInfos: [{
+                      layer: csvLayer,
+                      title: "Charging Stations"
+                    }]
+                  });
+
+                  // Add widget to the bottom right corner of the view
+                  //app.mapView.ui.add(legend, "bottom-right");
+
+
                  // create a new sketch view model
                  var sketchViewModelHome = new SketchViewModel({
                      view: app.mapView,
