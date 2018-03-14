@@ -13,3 +13,9 @@ body {
 .content {
     padding-top: 200px;    
 }
+
+body p {
+    line-height: 25px;
+    margin-bottom: 15px;
+    padding: 0;
+}
