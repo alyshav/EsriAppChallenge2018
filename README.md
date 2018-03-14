@@ -1,7 +1,7 @@
 # GoElectric by mapit.space
 ### Submission for the 2018 Esri App Challenge
 
-### Mission Statement
+## Mission Statement
 GoElectric by mapit.space (mapit dot space) is a suite of tools allowing Vancouverites to observe the benefits
 of owning an electric car and perform network analyses to find optimal charging stations within certain ranges.
 
