@@ -1,12 +1,119 @@
-body {
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar {
     padding-top: 50px;
-    width: 250px;
+    width: 270px;
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    background-color: #f2f2f2;
+}
+
+.nav-pills > .active > a {
+    color: #fff !important;
+}
+
+.nav-pills a {
+    color: #000 !important;
+}
+
+.nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: #808080 !important;
+}
+
+.colouredpill {
+    font-size: 14.5px;
+    padding-left: 1px;
+    padding-right: 2.3px;
+}
+
+.colouredpill .active a,
+.colouredpill .active a:hover {
+    background-color: #808080 !important;
+}
+
+
+.iconpilltext {
+    top: 3px !important;
+}
+
+.well {
+    background-color: #fff;
+    margin: 7.5px 15px;
+    padding: 5px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.175);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.175);
+    text-align: left;
+    font-size: 14px;
+}
+
+.titlewell {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.wellheading {
+    font-size: 15px;
+}
+
+.redwell {
+    border-right: solid #f85857;
+    border-width: 0 4px;    
+}
+
+.greenwell {
+    border-right: solid #69de6f;
+    border-width: 0 4px;
+}
+
+.subtext {    
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.totalsavingsvalue {
+    font-weight: 800;
+    font-size: 40px;
+}
+
+div.sidebar {
+    -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 
 .mappanel {
-    margin-left: 250px; 
-    float: right
+    margin-left: 269px;
+    position: relative;        
+}
+
+
+.drawicons {
+    margin-bottom: 10px;
+    float: right;
+    margin-right: 50px;
+}
+
+.drawpanel {
+    height: 150px;
+}
+
+.action-button {
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid #D3D3D3;
+    color: #6e6e6e;
+    height: 32px;
+    width: 32px;
+    text-align: center;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:hover,
+.action-button:focus {
+    background: #0079c1;
+    color: #e4e4e4;
 }

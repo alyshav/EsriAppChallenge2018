@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/sidebar.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CShadows+Into+Light" rel="stylesheet" type="text/css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <!-- Calcite Bootstrap -->
   <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
@@ -28,72 +29,101 @@
   <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark">
     <!-- Title -->
     <div class="calcite-title calcite-overflow-hidden">
-      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" />
+      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo"/>
       <span class="calcite-title-divider hidden-xs"></span>
-      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" />
+      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo"/>
     </div>
     <!-- Nav -->
     <ul class="nav navbar-nav calcite-nav">
-         <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+        <div class="calcite-navbar-search calcite-search-expander">
+            <div id="searchWidgetDiv"></div>
+        </div>
+        <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
         <li><a role="button" href="goelectric.html" aria-haspopup="true"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Explore</a></li>
-        <!--USE SEARCH IN NEW MENU-->
-        <!--<div class="calcite-navbar-search calcite-search-expander">
-          <div id="searchWidgetDiv"></div>
-        </div>-->
       </li>
     </ul>
   </nav>
   <!--/.calcite-navbar -->
 
-  <!-- Map  -->
-  <div class="sidebar">
-    <ul>
-        <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
-        <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
-    </ul>
-  </div>
+  <!--Side bar--> 
+    <div class="sidebar">
 
-  <div class="calcite-map calcite-map-absolute mappanel">
-    <div id="tabContainer" class="tab-content">
-      <div id="2dTab">
-        <div id="mapViewDiv"></div>
+        <ul id ="toolTab" class="nav nav-pills colouredpill">
+		    <li class="active">
+                <a class="pilltext" href="#savings" data-toggle="tab"><span class="glyphicon glyphicon-usd iconpilltext"></span>&nbsp;Savings</a>
+		    </li>
+		    <li>
+                <a class="pilltext" href="#charging" data-toggle="tab"><span class="glyphicon glyphicon-flash iconpilltext"></span>&nbsp;Charging</a>
+		    </li>
+		    <li>
+                <a class="pilltext" href="#help" data-toggle="tab"><span class="glyphicon glyphicon-question-sign iconpilltext"></span></a>
+		    </li>
+		</ul>
+
+
+    <div id="toolTabContent" class="tab-content">
+      <div class="tab-pane fade in active" id="savings">
+        <div class="well redwell">
+            <div class="titlewell">Savings Calculator</div>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Instructions</div><br/>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis finibus dolor, a viverra felis. Vestibulum eget dictum ante. Maecenas ut nisi eu nunc pretium suscipit non sit amet mauris. 
+        </div>
+        <div class="well redwell drawpanel">
+            <div class="wellheading">Home & Work Destinations</div><br/>           
+            <div class="drawicons">
+                Set Home
+                <button class="action-button esri-icon-home" id="pointButton" type="button" title="Set Home"></button>              
+                <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear Home"></button>        
+            </div>
+            <div class="drawicons">
+                Set Workplace
+                <button class="action-button esri-icon-organization" id="pointButton" type="button" title="Set Workplace"></button>              
+                <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear Workplace"></button>        
+            </div>
+        </div>
+        <div class="well greenwell">
+            <div class="subtext">Total Savings</div>
+            <div class="totalsavingsvalue">$15000</div>
+        </div>        
+      </div>
+      <div class="tab-pane fade" id="charging">
+        <div class="well redwell">
+            <div class="titlewell">Charging Stations</div>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Instructions</div><br/>
+            Find charging stations between your work and home!
+        </div>
+      </div>
+      <div class="tab-pane fade" id="help">
+        <div class="well redwell">
+            <div class="titlewell">Help</div>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">How to use GoElectric</div><br/>
+            <p>
+                The <b>Savings</b> tab shows you how much money you would save if you drove your car to work every day for a year. 
+            </p>
+            <p>
+                The <b>Charging</b> tab shows where charging stations are between your workplace and home. Set your location and workplace to find the optimal charging stations on your route!
+            </p>
+            <p>
+                <b>Charging Stations</b> are denoted by plugs with leaves. Click on the icons to view more information!
+            </p>
+            <br/>
+        </div>
       </div>
     </div>
+ </div>
+
+  <!-- Map -->
+  <div class="calcite-map calcite-map-absolute mappanel">    
+    <div id="mapViewDiv"></div>    
   </div>
   <!-- /.calcite-map -->
 
-  <!-- Panels -->
-
-  <div class="calcite-panels calcite-panels-right calcite-text-light calcite-bg-dark panel-group">
-
-    <!-- Basemaps Panel -->
-
-    <div id="panelBasemaps" class="panel collapse">
-      <div id="headingBasemaps" class="panel-heading" role="tab">
-        <div class="panel-title">
-          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps"
-            aria-expanded="false" aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span><span class="panel-label">Basemaps</span></a>
-          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelBasemaps"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
-        </div>
-      </div>
-      <div id="collapseBasemaps" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBasemaps">
-        <div class="panel-body">
-          <select id="selectBasemapPanel" class="form-control">
-            <option value="streets" data-vector="streets-vector">Streets</option>
-            <option value="satellite" data-vector="satellite" selected="">Satellite</option>
-            <option value="hybrid" data-vector="hybrid">Hybrid</option>
-            <option value="national-geographic" data-vector="national-geographic">National Geographic</option>
-            <option value="topo" data-vector="topo-vector">Topographic</option>
-            <option value="gray" data-vector="gray-vector">Gray</option>
-            <option value="dark-gray" data-vector="dark-gray-vector">Dark Gray</option>
-            <option value="osm" data-vector="osm">Open Street Map</option>
-            <option value="dark-gray" data-vector="streets-night-vector">Streets Night</option>
-            <option value="streets" data-vector="streets-navigation-vector">Streets Mobile</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script type="text/javascript">
     var dojoConfig = {
@@ -108,302 +138,403 @@
     };
   </script>
 
+<script>
+    $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+            $(this).tab('show');
+        });
+    });
+</script>
+
   <!-- ArcGIS JS 4.0 -->
-  <script src="https://js.arcgis.com/4.6/"></script>
+<script src="https://js.arcgis.com/4.6/"></script>
 
   <script>
-    var app;
+      var app;
 
-    require([
-      "esri/Map",
-      "esri/views/MapView",
-      "esri/widgets/Search",
-      "esri/widgets/Popup",
-      "esri/core/watchUtils",
-      "dojo/query",
-      "dojo/on",
-      "esri/layers/CSVLayer",
-      "esri/core/urlUtils",
+      require([
+           "esri/Map",
+           "esri/views/MapView",
+           "esri/widgets/Search",
+           "esri/widgets/Popup",
+           "esri/core/watchUtils",
+           "dojo/query",
+           "dojo/on",
+           "esri/layers/CSVLayer",
+           "esri/core/urlUtils",
+           "esri/layers/FeatureLayer",
+           "esri/views/2d/draw/Draw",
+           "esri/widgets/Sketch/SketchViewModel",
+           "esri/Graphic",
+           "esri/layers/GraphicsLayer",
 
       // Bootstrap
-      "bootstrap/Collapse",
-      "bootstrap/Dropdown",
-      "bootstrap/Tab",
+           "bootstrap/Collapse",
+           "bootstrap/Dropdown",
+           "bootstrap/Tab",
 
       // Calcite Maps
-      "calcite-maps/calcitemaps-v0.2",
-      "dojo/domReady!"
-    ], function(
-        Map, 
-        MapView, 
-        Search, 
-        Popup, 
-        watchUtils, 
-        query,
-        on,
-        CSVLayer,
-        urlUtils
-      ) {
+           "calcite-maps/calcitemaps-v0.2",
+           "dojo/domReady!"
+         ], function (
+             Map,
+             MapView,
+             Search,
+             Popup,
+             watchUtils,
+             query,
+             on,
+             CSVLayer,
+             urlUtils,
+             FeatureLayer,
+             Draw,
+             SketchViewModel,
+             Graphic,
+             GraphicsLayer
+           ) {
 
-      /******************************************************************
-       *
-       * App settings
-       * 
-       ******************************************************************/
-      app = {
-        center: [-123.10043397545394, 49.25567607806475],
-        scale: 144447,
-        basemap: "streets-navigation-vector",
-        viewPadding: {
-          top: 50,
-          bottom: 0
-        },
-        uiComponents: ["zoom", "compass", "attribution"],
-        dockOptions: {
-          position: "auto",
-          // Custom docking breakpoints
-          breakpoint: {
-            width: 768,
-            height: 768
-          }
-        },
-        mapView: null,
-        activeView: null,
-        searchWidget: null,
-        screenWidth: 0
-      };
+             /******************************************************************
+             *
+             * App settings
+             * 
+             ******************************************************************/
+             app = {
+                 center: [-123.10043397545394, 49.25567607806475],
+                 scale: 144447,
+                 basemap: "streets-navigation-vector",
+                 viewPadding: {
+                     top: 50,
+                     bottom: 0
+                 },
+                 uiComponents: ["zoom", "compass", "attribution"],
+                 dockOptions: {
+                     position: "auto",
+                     // Custom docking breakpoints
+                     breakpoint: {
+                         width: 768,
+                         height: 768
+                     }
+                 },
+                 mapView: null,
+                 activeView: null,
+                 searchWidget: null,
+                 screenWidth: 0
+             };
 
-      /******************************************************************
-       *
-       * Create the map and scene view and ui components
-       * 
-       ******************************************************************/
+             /******************************************************************
+             *
+             * Create the map view and ui components
+             * 
+             ******************************************************************/
+             // GraphicsLayer to hold graphics created via sketch view model
+             var tempGraphicsLayer = new GraphicsLayer();
 
-      // Map
-      var map = new Map({
-        basemap: app.basemap
-      });
-      app.mapView = new MapView({
-        container: "mapViewDiv",
-        map: map,
-        center: app.center,
-        scale: app.scale,
-        padding: app.viewPadding,
-        popup: new Popup({
-          dockOptions: app.dockOptions
-        }),
-        ui: {
-          components: app.uiComponents
-        }
-      });
+             // Map
+             var map = new Map({
+                 basemap: app.basemap,
+                 layers: [tempGraphicsLayer]
+             });
+             app.mapView = new MapView({
+                 container: "mapViewDiv",
+                 map: map,
+                 center: app.center,
+                 scale: app.scale,
+                 padding: app.viewPadding,
+                 popup: new Popup({
+                     dockOptions: app.dockOptions
+                 }),
+                 ui: {
+                     components: app.uiComponents
+                 }
+             });
 
-
-
-
-      // Set the active view to scene
-      app.activeView = app.mapView;
-
-      // Create the search widget and add it to the navbar instead of view
-      app.searchWidget = new Search({
-        view: app.activeView
-      }, "searchWidgetDiv");
-
-      var csvLayer = new CSVLayer({
-        url: "data/chargingStations.csv"
-      });
-
-      csvLayer.renderer = {
-        type: "simple",
-        symbol: {
-            type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-            url: "https://image.flaticon.com/icons/svg/273/273556.svg",
-            width: "25px",
-            height: "25px"
-        }
-      };
-      map.add(csvLayer);
+             app.mapView.ui.move(["zoom", "compass"], "top-left");
 
 
-      /******************************************************************
-       *
-       * Synchronize the view, search and popup
-       * 
-       ******************************************************************/
+             // Set the active view to scene
+             app.activeView = app.mapView;
 
-      // Tab - toggle between map and scene view
-      query(".calcite-navbar li a[data-toggle='tab']").on("click", function(
-        e) {
-        syncTabs(e);
+             // Create the search widget and add it to the navbar instead of view
+             app.searchWidget = new Search({
+                 view: app.activeView
+             }, "searchWidgetDiv");
 
-        syncViews(app.sceneView, app.mapView);
-        app.activeView = app.mapView;
 
-        syncSearch();
-      });
 
-      // Tabs - sync ui menus
-      function syncTabs(e) {
-        query(".calcite-navbar li.active").removeClass("active");
-        query(e.target).addClass("active");
-      }
 
-      // Views - sync viewpoint and popup
-      function syncViews(fromView, toView) {
-        watchUtils.whenTrueOnce(toView, "ready").then(function(result) {
-          watchUtils.whenTrueOnce(toView, "stationary").then(function(
-            result) {
-            toView.goTo(fromView.viewpoint);
-            toView.popup.reposition();
-          });
-        });
-      }
+             var chargingstationtemplate = { // autocasts as new PopupTemplate()
+                 title: "Charging Station at {ADDRESS}",
+                 content: "<p>Lot operated by {LOT_OPERATOR}</p>",
+                 fieldInfos: [{
+                     fieldName: "ADDRESS",
+                     format: {
+                         digitSeparator: true, // Use a comma separator for large numbers
+                         places: 0 // Sets the number of decimal places to 0 and rounds up
+                     }
+                 }, {
+                     fieldName: "LOT_OPERATOR",
+                     format: {
+                         digitSeparator: true,
+                         places: 0
+                     }
+                 }]
+             };
 
-      // Search - sync search location and popup
-      function syncSearch() {
-        app.searchWidget.view = app.activeView;
-        if (app.searchWidget.selectedResult) {
-          app.searchWidget.search(app.searchWidget.selectedResult.name);
-          app.activeView.popup.reposition();
-        }
-      }
+             var csvLayer = new CSVLayer({
+                 url: "data/chargingStations.csv",
+                 popupTemplate: chargingstationtemplate
+             });
 
-      /******************************************************************
-       *
-       * Show and hide the panels and popup
-       * 
-       ******************************************************************/
+             csvLayer.renderer = {
+                 type: "simple",
+                 symbol: {
+                     type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                     url: "imgs/plug.png",
+                     width: "20px",
+                     height: "40px"
+                 }
+             };
+             map.add(csvLayer);
 
-      // Views - Listen to view size changes to show/hide panels
-      app.mapView.watch("size", viewSizeChange);
 
-      function viewSizeChange(screenSize) {
-        if (app.screenWidth !== screenSize[0]) {
-          app.screenWidth = screenSize[0];
-          setPanelVisibility();
-        }
-      }
+             /******* ADD POINTS ***********/
+             app.mapView.when(function () {
+                 // create a new sketch view model
+                 var sketchViewModel = new SketchViewModel({
+                     view: app.mapView,
+                     layer: tempGraphicsLayer,
+                     pointSymbol: { // symbol used for points
+                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                         url: "imgs/house.png",
+                         width: "20px",
+                         height: "20px"
+                     }
+                 });
 
-      // Popups - Listen to popup changes to show/hide panels
-      app.mapView.popup.watch(["visible", "currentDockPosition"],
-        setPanelVisibility);
+                 // ************************************************************
+                 // Get the completed graphic from the event and add it to view.
+                 // This event fires when user presses
+                 //  * "C" key to finish sketching point, polygon or polyline.
+                 //  * Double-clicks to finish sketching polyline or polygon.
+                 //  * Clicks to finish sketching a point geometry.
+                 // ***********************************************************
+                 sketchViewModel.on("draw-complete", function (evt) {
+                     // add the graphic to the graphics layer
+                     tempGraphicsLayer.add(evt.graphic);
+                     setActiveButton();
+                 });
 
-      // Panels - Show/hide the panel when popup is docked
-      function setPanelVisibility() {
-        var isMobileScreen = app.activeView.widthBreakpoint === "xsmall" ||
-          app.activeView.widthBreakpoint ===
-          "small",
-          isDockedVisible = app.activeView.popup.visible && app.activeView.popup
-          .currentDockPosition,
-          isDockedBottom = app.activeView.popup.currentDockPosition && app.activeView
-          .popup.currentDockPosition
-          .indexOf("bottom") > -1,
-          isDockedTop = app.activeView.popup.currentDockPosition && app.activeView
-          .popup.currentDockPosition
-          .indexOf("top") > -1;
-        // Mobile (xsmall/small)
-        if (isMobileScreen) {
-          if (isDockedVisible && isDockedBottom) {
-            query(".calcite-panels").addClass("invisible");
-          } else {
-            query(".calcite-panels").removeClass("invisible");
-          }
-        } else { // Desktop (medium+)
-          if (isDockedVisible && isDockedTop) {
-            query(".calcite-panels").addClass("invisible");
-          } else {
-            query(".calcite-panels").removeClass("invisible");
-          }
-        }
-      }
+                 // *************************************
+                 // activate the sketch to create a point
+                 // *************************************
+                 var drawPointButton = document.getElementById("pointButton");
+                 drawPointButton.onclick = function () {
+                     // set the sketch to create a point geometry
+                     sketchViewModel.create("point");
+                     setActiveButton(this);
+                 };
 
-      // Panels - Dock popup when panels show (desktop or mobile)
-      query(".calcite-panels .panel").on("show.bs.collapse", function(e) {
-        if (app.activeView.popup.currentDockPosition || app.activeView.widthBreakpoint ===
-          "xsmall") {
-          app.activeView.popup.dockEnabled = false;
-        }
-      });
+                 // **************
+                 // reset button
+                 // **************
+                 document.getElementById("resetBtn").onclick = function () {
+                     tempGraphicsLayer.removeAll();
+                     sketchViewModel.reset();
+                     setActiveButton();
+                 };
 
-      // Panels - Undock popup when panels hide (mobile only)
-      query(".calcite-panels .panel").on("hide.bs.collapse", function(e) {
-        if (app.activeView.widthBreakpoint === "xsmall") {
-          app.activeView.popup.dockEnabled = true;
-        }
-      });
+                 function setActiveButton(selectedButton) {
+                     // focus the view to activate keyboard shortcuts for sketching
+                     app.mapView.focus();
+                     var elements = document.getElementsByClassName("active");
+                     for (var i = 2; i < elements.length; i++) {
+                         // skip the first element because it'll remove the active class from our side panel nav
+                        elements[i].classList.remove("active");
+                     }
+                     if (selectedButton) {
+                         selectedButton.classList.add("active");
+                     }
+                 }
+             });
 
-      // Popup
-      query(".esri-popup__header-title").on("click", function(e) {
-        query(".esri-popup__main-container").toggleClass(
-          "esri-popup-collapsed");
-        app.activeView.popup.reposition();
-      }.bind(this));
 
-      /******************************************************************
-       *
-       * Apply Calcite Maps CSS classes to change application on the fly
-       *
-       * For more information about the CSS styles or Sass build visit:
-       * http://github.com/esri/calcite-maps
-       * 
-       ******************************************************************/
+             /******************************************************************
+             *
+             * Synchronize the view, search and popup
+             * 
+             ******************************************************************/
 
-      var cssSelectorUI = ".calcite-navbar, .calcite-panels",
-        cssSelectorMap = ".calcite-map";
+             // Tab - toggle between map and scene view
+             query(".calcite-navbar li a[data-toggle='tab']").on("click", function (
+             e) {
+                 syncTabs(e);
 
-      // Basemap events
-      query("#selectBasemapPanel").on("change", function(e) {
-        app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
-          .dataset.vector;
-        app.sceneView.map.basemap = e.target.value;
-      });
+                 syncViews(app.mapView);
+                 app.activeView = app.mapView;
 
-      // Set view padding for widgets based on navbar position
-      function setViewPadding(layout) {
-        var padding, uiPadding;
-        // Top
-        if (layout === "calcite-nav-top") {
-          padding = {
-            padding: {
-              top: 50,
-              bottom: 0
-            }
-          };
-          uiPadding = {
-            padding: {
-              top: 15,
-              right: 15,
-              bottom: 30,
-              left: 15
-            }
-          };
-        } else { // Bottom
-          padding = {
-            padding: {
-              top: 0,
-              bottom: 50
-            }
-          };
-          uiPadding = {
-            padding: {
-              top: 30,
-              right: 15,
-              bottom: 15,
-              left: 15
-            }
-          };
-        }
-        app.mapView.set(padding);
-        app.mapView.ui.set(uiPadding);
-        app.sceneView.set(padding);
-        app.sceneView.ui.set(uiPadding);
-        // Reset popup
-        if (app.activeView.popup.visible && app.activeView.popup.dockEnabled) {
-          app.activeView.popup.visible = false;
-          app.activeView.popup.visible = true;
-        }
-      }
+                 syncSearch();
+             });
 
-    });
+             // Tabs - sync ui menus
+             function syncTabs(e) {
+                 query(".calcite-navbar li.active").removeClass("active");
+                 query(e.target).addClass("active");
+             }
+
+             // Views - sync viewpoint and popup
+             function syncViews(fromView, toView) {
+                 watchUtils.whenTrueOnce(toView, "ready").then(function (result) {
+                     watchUtils.whenTrueOnce(toView, "stationary").then(function (
+                 result) {
+                         toView.goTo(fromView.viewpoint);
+                         toView.popup.reposition();
+                     });
+                 });
+             }
+
+             // Search - sync search location and popup
+             function syncSearch() {
+                 app.searchWidget.view = app.activeView;
+                 if (app.searchWidget.selectedResult) {
+                     app.searchWidget.search(app.searchWidget.selectedResult.name);
+                     app.activeView.popup.reposition();
+                 }
+             }
+
+             /******************************************************************
+             *
+             * Show and hide the panels and popup
+             * 
+             ******************************************************************/
+
+             // Views - Listen to view size changes to show/hide panels
+             app.mapView.watch("size", viewSizeChange);
+
+             function viewSizeChange(screenSize) {
+                 if (app.screenWidth !== screenSize[0]) {
+                     app.screenWidth = screenSize[0];
+                     setPanelVisibility();
+                 }
+             }
+
+             // Popups - Listen to popup changes to show/hide panels
+             app.mapView.popup.watch(["visible", "currentDockPosition"],
+             setPanelVisibility);
+
+             // Panels - Show/hide the panel when popup is docked
+             function setPanelVisibility() {
+                 var isMobileScreen = app.activeView.widthBreakpoint === "xsmall" ||
+               app.activeView.widthBreakpoint ===
+               "small",
+               isDockedVisible = app.activeView.popup.visible && app.activeView.popup
+               .currentDockPosition,
+               isDockedBottom = app.activeView.popup.currentDockPosition && app.activeView
+               .popup.currentDockPosition
+               .indexOf("bottom") > -1,
+               isDockedTop = app.activeView.popup.currentDockPosition && app.activeView
+               .popup.currentDockPosition
+               .indexOf("top") > -1;
+                 // Mobile (xsmall/small)
+                 if (isMobileScreen) {
+                     if (isDockedVisible && isDockedBottom) {
+                         query(".calcite-panels").addClass("invisible");
+                     } else {
+                         query(".calcite-panels").removeClass("invisible");
+                     }
+                 } else { // Desktop (medium+)
+                     if (isDockedVisible && isDockedTop) {
+                         query(".calcite-panels").addClass("invisible");
+                     } else {
+                         query(".calcite-panels").removeClass("invisible");
+                     }
+                 }
+             }
+
+             // Panels - Dock popup when panels show (desktop or mobile)
+             query(".calcite-panels .panel").on("show.bs.collapse", function (e) {
+                 if (app.activeView.popup.currentDockPosition || app.activeView.widthBreakpoint ===
+               "xsmall") {
+                     app.activeView.popup.dockEnabled = false;
+                 }
+             });
+
+             // Panels - Undock popup when panels hide (mobile only)
+             query(".calcite-panels .panel").on("hide.bs.collapse", function (e) {
+                 if (app.activeView.widthBreakpoint === "xsmall") {
+                     app.activeView.popup.dockEnabled = true;
+                 }
+             });
+
+             // Popup
+             query(".esri-popup__header-title").on("click", function (e) {
+                 query(".esri-popup__main-container").toggleClass(
+               "esri-popup-collapsed");
+                 app.activeView.popup.reposition();
+             } .bind(this));
+
+             /******************************************************************
+             *
+             * Apply Calcite Maps CSS classes to change application on the fly
+             *
+             * For more information about the CSS styles or Sass build visit:
+             * http://github.com/esri/calcite-maps
+             * 
+             ******************************************************************/
+
+             var cssSelectorUI = ".calcite-navbar, .calcite-panels",
+             cssSelectorMap = ".calcite-map";
+
+             // Basemap events
+             query("#selectBasemapPanel").on("change", function (e) {
+                 app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
+               .dataset.vector;
+             });
+
+             // Set view padding for widgets based on navbar position
+             function setViewPadding(layout) {
+                 var padding, uiPadding;
+                 // Top
+                 if (layout === "calcite-nav-top") {
+                     padding = {
+                         padding: {
+                             top: 50,
+                             bottom: 0
+                         }
+                     };
+                     uiPadding = {
+                         padding: {
+                             top: 15,
+                             right: 15,
+                             bottom: 30,
+                             left: 15
+                         }
+                     };
+                 } else { // Bottom
+                     padding = {
+                         padding: {
+                             top: 0,
+                             bottom: 50
+                         }
+                     };
+                     uiPadding = {
+                         padding: {
+                             top: 30,
+                             right: 15,
+                             bottom: 15,
+                             left: 15
+                         }
+                     };
+                 }
+                 app.mapView.set(padding);
+                 app.mapView.ui.set(uiPadding);
+                 // Reset popup
+                 if (app.activeView.popup.visible && app.activeView.popup.dockEnabled) {
+                     app.activeView.popup.visible = false;
+                     app.activeView.popup.visible = true;
+                 }
+             }
+
+         });
   </script>
 
 </body>
