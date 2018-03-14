@@ -56,47 +56,144 @@
                 <a class="pilltext" href="#charging" data-toggle="tab"><span class="glyphicon glyphicon-flash iconpilltext"></span>&nbsp;Charging</a>
 		    </li>
 		    <li>
+                <a class="pilltext" href="#driving" data-toggle="tab"><span class="glyphicon glyphicon-road iconpilltext"></span>&nbsp;Driving</a>
+		    </li>
+		    <li>
+                <a class="pilltext" href="#legend" data-toggle="tab"><span class="glyphicon glyphicon-list-alt iconpilltext"></span></a>
+		    </li>
+		    <li>
                 <a class="pilltext" href="#help" data-toggle="tab"><span class="glyphicon glyphicon-question-sign iconpilltext"></span></a>
 		    </li>
 		</ul>
 
 
     <div id="toolTabContent" class="tab-content">
+    <!-- SAVINGS PANEL -->
       <div class="tab-pane fade in active" id="savings">
         <div class="well redwell">
             <div class="titlewell">Savings Calculator</div>
         </div>
         <div class="well redwell">
-            <div class="wellheading">Instructions</div><br/>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quis finibus dolor, a viverra felis. Vestibulum eget dictum ante. Maecenas ut nisi eu nunc pretium suscipit non sit amet mauris. 
+            <div class="wellheading">Instructions</div>
+            The Savings Calculator provides an approximation of your daily driving distance, savings compared to if you drove an average-consuming gas powered vehicle, and reduction in your carbon footprint.
+            Set your home and workplace to get started!
         </div>
-        <div class="well redwell drawpanel">
+        <div class="well bluewell drawpanel">
             <div class="wellheading">Home & Work Destinations</div><br/>           
             <div class="drawicons">
                 Set Home
-                <button class="action-button esri-icon-home" id="pointButton" type="button" title="Set Home"></button>              
-                <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear Home"></button>        
+                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="homeResetBtn" type="button" title="Clear Home"></button>        
             </div>
             <div class="drawicons">
                 Set Workplace
-                <button class="action-button esri-icon-organization" id="pointButton" type="button" title="Set Workplace"></button>              
-                <button class="action-button esri-icon-trash" id="resetBtn" type="button" title="Clear Workplace"></button>        
+                <button class="action-button glyphicon glyphicon-briefcase" id="destButton" type="button" title="Set Workplace"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="destResetBtn" type="button" title="Clear Workplace"></button>        
+            </div>
+            <div class="calculate">
+                <button class="btn btn-primary btn-small">Calculate Savings </button>
             </div>
         </div>
         <div class="well greenwell">
+            <div class="subtext">Distance Driven each Day</div>
+            <div class="totalsavingsvalue">150 km</div>
+        </div>   
+        <div class="well greenwell">
             <div class="subtext">Total Savings</div>
-            <div class="totalsavingsvalue">$15000</div>
-        </div>        
+            <span class="totalsavingsvalue">$15000</span>
+        </div>
+        <div class="well greenwell">
+            <div class="subtext">Carbon Footprint</div>
+            <span class="totalsavingsvalue">420</span>
+            <span class="totalsavingsmeasure">tonnes CO<sub>2</sub></span>
+        </div>                  
       </div>
+    <!-- CHARGING STATIONS PANEL -->
       <div class="tab-pane fade" id="charging">
         <div class="well redwell">
             <div class="titlewell">Charging Stations</div>
         </div>
         <div class="well redwell">
-            <div class="wellheading">Instructions</div><br/>
-            Find charging stations between your work and home!
+            <div class="wellheading">Instructions</div>
+            Find charging stations nearby!
+        </div>
+        <div class="well bluewell drawpanel">
+            <div class="wellheading">Set Location</div><br/>           
+            <div class="drawicons">
+                Add Marker
+                <button class="action-button glyphicon glyphicon-map-marker" id="MarkerButton" type="button" title="Set Marker"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="MarkerResetBtn" type="button" title="Clear Marker"></button>        
+            </div>
+            <div class="setlocation">
+                Search Distance (in minutes)
+                <input id="distance" type="number" min="0" placeholder="e.g. 5">
+            </div>
+            <div class="calculate">
+                <button class="btn btn-primary btn-small"> Find Charging Stations </button>
+            </div>
+        </div>
+        <div class="well greenwell">
+            <div class="subtext">Number of Charging Stations within x mins</div>
+            <span class="totalsavingsvalue">4</span>
         </div>
       </div>
+    <!-- DRIVING RADIUS PANEL -->
+      <div class="tab-pane fade" id="driving">
+        <div class="well redwell">
+            <div class="titlewell">Driving Distance</div>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Instructions</div>
+            Find out how far you can drive on one charge!
+        </div>
+        <div class="well bluewell drawpanel">
+            <div class="wellheading">Set Location</div><br/>           
+            <div class="drawicons">
+                Add Marker
+                <button class="action-button glyphicon glyphicon-map-marker" id="homeButton" type="button" title="Set Home"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="homeResetBtn" type="button" title="Clear Home"></button>        
+            </div>
+            <div class="setlocation">
+                Search Distance (in minutes)
+                <input id="distance" type="number" min="0" placeholder="e.g. 5">
+            </div>
+            <div class="calculate">
+                <button class="btn btn-primary btn-small"> Find Possible Routes</button>
+            </div>
+        </div>
+        <div class="well greenwell">
+            <div class="subtext">Possible Routes</div>
+            <span class="totalsavingsvalue">4132132</span>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="legend">
+        <div class="well redwell">
+            <div class="titlewell">Display</div>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Change Base Map</div><br />
+            <select id="selectBasemapPanel" class="form-control">
+                <option value="streets" data-vector="streets-vector">Streets</option>
+                <option value="satellite" data-vector="satellite" selected="">Satellite</option>
+                <option value="hybrid" data-vector="hybrid">Hybrid</option>
+                <option value="national-geographic" data-vector="national-geographic">National Geographic</option>
+                <option value="topo" data-vector="topo-vector">Topographic</option>
+                <option value="gray" data-vector="gray-vector">Gray</option>
+                <option value="dark-gray" data-vector="dark-gray-vector">Dark Gray</option>
+                <option value="osm" data-vector="osm">Open Street Map</option>
+                <option value="dark-gray" data-vector="streets-night-vector">Streets Night</option>
+                <option value="streets" data-vector="streets-navigation-vector">Streets Mobile</option>
+            </select>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Legend</div>
+            <div id="legendDiv"></div>
+        </div>
+      </div>
+
+
+      <!-- HELP PANEL -->
       <div class="tab-pane fade" id="help">
         <div class="well redwell">
             <div class="titlewell">Help</div>
@@ -107,7 +204,10 @@
                 The <b>Savings</b> tab shows you how much money you would save if you drove your car to work every day for a year. 
             </p>
             <p>
-                The <b>Charging</b> tab shows where charging stations are between your workplace and home. Set your location and workplace to find the optimal charging stations on your route!
+                The <b>Charging</b> tab shows nearby charging stations. Set a location marker and click "Find Charging Stations."
+            </p>
+            <p>
+                The <b>Driving</b> tab shows the radial distance you can drive on one charge from a set point. Set a location marker and click "Find Possible Routes" to get started!
             </p>
             <p>
                 <b>Charging Stations</b> are denoted by plugs with leaves. Click on the icons to view more information!
@@ -167,6 +267,8 @@
            "esri/widgets/Sketch/SketchViewModel",
            "esri/Graphic",
            "esri/layers/GraphicsLayer",
+           "esri/widgets/Legend",
+           "esri/widgets/BasemapToggle",
 
       // Bootstrap
            "bootstrap/Collapse",
@@ -190,7 +292,9 @@
              Draw,
              SketchViewModel,
              Graphic,
-             GraphicsLayer
+             GraphicsLayer,
+             Legend,
+             BasemapToggle
            ) {
 
              /******************************************************************
@@ -228,11 +332,12 @@
              ******************************************************************/
              // GraphicsLayer to hold graphics created via sketch view model
              var tempGraphicsLayer = new GraphicsLayer();
+             var tempGraphicsLayer2 = new GraphicsLayer();
 
              // Map
              var map = new Map({
                  basemap: app.basemap,
-                 layers: [tempGraphicsLayer]
+                 layers: [tempGraphicsLayer, tempGraphicsLayer2]
              });
              app.mapView = new MapView({
                  container: "mapViewDiv",
@@ -297,15 +402,36 @@
              map.add(csvLayer);
 
 
-             /******* ADD POINTS ***********/
+             /******* ADD THINGS ***********/
              app.mapView.when(function () {
+
+                   var legend = new Legend({
+                    container: "legendDiv",
+                    view: app.mapView,
+                    layerInfos: [{
+                      layer: csvLayer,
+                      title: "Charging Stations"
+                    }]
+                  });
+
                  // create a new sketch view model
-                 var sketchViewModel = new SketchViewModel({
+                 var sketchViewModelHome = new SketchViewModel({
                      view: app.mapView,
                      layer: tempGraphicsLayer,
                      pointSymbol: { // symbol used for points
                          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
                          url: "imgs/house.png",
+                         width: "20px",
+                         height: "20px"
+                     }
+                 });
+
+                 var sketchViewModelDest = new SketchViewModel({
+                     view: app.mapView,
+                     layer: tempGraphicsLayer2,
+                     pointSymbol: { // symbol used for points
+                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                         url: "imgs/briefcase.svg",
                          width: "20px",
                          height: "20px"
                      }
@@ -318,38 +444,71 @@
                  //  * Double-clicks to finish sketching polyline or polygon.
                  //  * Clicks to finish sketching a point geometry.
                  // ***********************************************************
-                 sketchViewModel.on("draw-complete", function (evt) {
+                 sketchViewModelHome.on("draw-complete", function (evt) {
                      // add the graphic to the graphics layer
+                     //console.log(evt);
                      tempGraphicsLayer.add(evt.graphic);
                      setActiveButton();
                  });
+                 sketchViewModelDest.on("draw-complete", function (evt) {
+                     // add the graphic to the graphics layer
+                     console.log(evt);
+                     tempGraphicsLayer2.add(evt.graphic);
+                     setActiveButton();
+                 });
+                 // *************************************
+                 // activate the sketch to create a home point
+                 // *************************************
+                 var drawHomeButton = document.getElementById("homeButton");
+                 drawHomeButton.onclick = function () {
+                     // set the sketch to create a point geometry
+                     sketchViewModelHome.create("point");
+                     setActiveButton(this);
+                     document.getElementById("homeButton").disabled = true;
+                 };
 
                  // *************************************
-                 // activate the sketch to create a point
+                 // activate the sketch to create a dest point
                  // *************************************
-                 var drawPointButton = document.getElementById("pointButton");
-                 drawPointButton.onclick = function () {
+                 var drawDestButton = document.getElementById("destButton");
+                 drawDestButton.onclick = function (event) {
+                     console.log(event);
                      // set the sketch to create a point geometry
-                     sketchViewModel.create("point");
+                     sketchViewModelDest.create("point");
                      setActiveButton(this);
+                     document.getElementById("destButton").disabled = true;
+                 };
+
+
+                 // **************
+                 // Home reset button
+                 // **************
+                 document.getElementById("homeResetBtn").onclick = function () {
+                     tempGraphicsLayer.removeAll();
+                     sketchViewModelHome.reset();
+                     setActiveButton();
+                     document.getElementById("homeButton").disabled = false;
                  };
 
                  // **************
-                 // reset button
+                 // dest reset button
                  // **************
-                 document.getElementById("resetBtn").onclick = function () {
-                     tempGraphicsLayer.removeAll();
-                     sketchViewModel.reset();
+                 document.getElementById("destResetBtn").onclick = function () {
+                     tempGraphicsLayer2.removeAll();
+                     sketchViewModelDest.reset();
                      setActiveButton();
+                     document.getElementById("destButton").disabled = false;
                  };
 
                  function setActiveButton(selectedButton) {
                      // focus the view to activate keyboard shortcuts for sketching
                      app.mapView.focus();
+                     //console.log(selectedButton.id);
                      var elements = document.getElementsByClassName("active");
                      for (var i = 2; i < elements.length; i++) {
                          // skip the first element because it'll remove the active class from our side panel nav
-                        elements[i].classList.remove("active");
+                         //console.log(elements[i].id)
+                         elements[i].classList.remove("active");
                      }
                      if (selectedButton) {
                          selectedButton.classList.add("active");

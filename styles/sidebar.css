@@ -6,11 +6,32 @@ html, body {
 
 .sidebar {
     padding-top: 50px;
-    width: 270px;
+    width: 300px;
     height: 100%;
     z-index: 100;
     position: absolute;
     background-color: #f2f2f2;
+    overflow:scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
 
 .nav-pills > .active > a {
@@ -26,14 +47,13 @@ html, body {
 }
 
 .colouredpill {
-    font-size: 14.5px;
-    padding-left: 1px;
-    padding-right: 2.3px;
+    font-size: 16px;
+    text-align: center;
 }
 
 .colouredpill .active a,
 .colouredpill .active a:hover {
-    background-color: #808080 !important;
+    background-color: #808080 !important;    
 }
 
 
@@ -44,7 +64,7 @@ html, body {
 .well {
     background-color: #fff;
     margin: 7.5px 15px;
-    padding: 5px;
+    padding: 10px;
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.175);
     box-shadow: 0 1px 3px rgba(0,0,0,0.175);
     text-align: left;
@@ -70,6 +90,11 @@ html, body {
     border-width: 0 4px;
 }
 
+.bluewell {
+    border-right: solid #5bc0de;
+    border-width: 0 4px;        
+}
+
 .subtext {    
     font-weight: 800;
     font-size: 12px;
@@ -80,13 +105,18 @@ html, body {
     font-size: 40px;
 }
 
+.totalsavingsmeasure {
+    font-weight: 800;
+    font-size: 20px;
+}
+
 div.sidebar {
     -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
     box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 
 .mappanel {
-    margin-left: 269px;
+    margin-left: 299px;
     position: relative;        
 }
 
@@ -98,7 +128,15 @@ div.sidebar {
 }
 
 .drawpanel {
-    height: 150px;
+    /*height: 150px;*/
+}
+
+.calculate, .setlocation {
+    text-align: center;
+}
+
+.setlocation {
+    margin-bottom: 20px;
 }
 
 .action-button {
@@ -116,4 +154,12 @@ div.sidebar {
 .action-button:focus {
     background: #0079c1;
     color: #e4e4e4;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #e4e4e4;
+  pointer-events: none;
 }
