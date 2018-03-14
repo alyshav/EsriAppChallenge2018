@@ -169,9 +169,25 @@
 
       <div class="tab-pane fade" id="legend">
         <div class="well redwell">
-            <div class="titlewell">Legend</div>
+            <div class="titlewell">Display</div>
         </div>
         <div class="well redwell">
+            <div class="wellheading">Change Base Map</div><br />
+            <select id="selectBasemapPanel" class="form-control">
+                <option value="streets" data-vector="streets-vector">Streets</option>
+                <option value="satellite" data-vector="satellite" selected="">Satellite</option>
+                <option value="hybrid" data-vector="hybrid">Hybrid</option>
+                <option value="national-geographic" data-vector="national-geographic">National Geographic</option>
+                <option value="topo" data-vector="topo-vector">Topographic</option>
+                <option value="gray" data-vector="gray-vector">Gray</option>
+                <option value="dark-gray" data-vector="dark-gray-vector">Dark Gray</option>
+                <option value="osm" data-vector="osm">Open Street Map</option>
+                <option value="dark-gray" data-vector="streets-night-vector">Streets Night</option>
+                <option value="streets" data-vector="streets-navigation-vector">Streets Mobile</option>
+            </select>
+        </div>
+        <div class="well redwell">
+            <div class="wellheading">Legend</div>
             <div id="legendDiv"></div>
         </div>
       </div>
@@ -252,6 +268,7 @@
            "esri/Graphic",
            "esri/layers/GraphicsLayer",
            "esri/widgets/Legend",
+           "esri/widgets/BasemapToggle",
 
       // Bootstrap
            "bootstrap/Collapse",
@@ -276,7 +293,8 @@
              SketchViewModel,
              Graphic,
              GraphicsLayer,
-             Legend
+             Legend,
+             BasemapToggle
            ) {
 
              /******************************************************************
