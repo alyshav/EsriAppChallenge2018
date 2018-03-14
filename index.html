@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>mapit.space</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>mapit.space</title>
+    <!-- Calcite Bootstrap -->
+    <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
+    <!-- Calcite Maps -->
+    <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
 
-  <link rel="stylesheet" href="styles/style.css">
+    <!-- ArcGIS JS 4.0 -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
 
-  <!-- Calcite Bootstrap -->
-  <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
+    <!--bootstrap is love, bootstrap is life-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <!-- Calcite Maps -->
-  <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="styles/homestyle.css">
 
-  <!-- ArcGIS JS 4.0 -->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+
 
 </head>
 
 <body>
 
-  <!-- Navbar -->
+    <!-- Navbar -->
 
-  <nav class="navbar calcite-nav-top calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark">
-    <!-- Title -->
-    <div class="calcite-title calcite-overflow-hidden">
-      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo" />
-      <span class="calcite-title-divider hidden-xs"></span>
-      <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo" />
+    <nav class="navbar calcite-nav-top calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark">
+        <!-- Title -->
+        <div class="calcite-title calcite-overflow-hidden">
+            <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo" />
+            <span class="calcite-title-divider hidden-xs"></span>
+            <img class="logo" src="imgs/mapit-space-trans-bg-2.png" alt="logo" />
+        </div>
+        <!-- Nav -->
+        <ul class="nav navbar-nav calcite-nav">
+            <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a role="button" href="goelectric.html" aria-haspopup="true"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Explore</a></li>
+
+        </ul>
+    </nav>
+    <!--/.calcite-navbar -->
+
+
+    <div class="content">
+        hello welcome to ma shitty site plz give us a nice trip
     </div>
-    <!-- Nav -->
-    <ul class="nav navbar-nav calcite-nav">
-        <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-        <li><a role="button" href="goelectric.html" aria-haspopup="true"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Explore</a></li>
-      </li>
-    </ul>
-  </nav>
-  <!--/.calcite-navbar -->
-
-
-  <div class="content">
-      hello welcome to ma shitty site plz give us a nice trip
-  </div>
 
 
 
-  <script type="text/javascript">
-    var dojoConfig = {
-      packages: [{
-        name: "bootstrap",
-        location: "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
-      },
-      {
-        name: "calcite-maps",
-        location: "https://esri.github.io/calcite-maps/dist/js/dojo"
-      }]
-    };
-  </script>
+    <script type="text/javascript">
+        var dojoConfig = {
+            packages: [{
+                    name: "bootstrap",
+                    location: "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
+                },
+                {
+                    name: "calcite-maps",
+                    location: "https://esri.github.io/calcite-maps/dist/js/dojo"
+                }
+            ]
+        };
 
-  <!-- ArcGIS JS 4.0 -->
-  <script src="https://js.arcgis.com/4.6/"></script>
+    </script>
+
+    <!-- ArcGIS JS 4.0 -->
+    <script src="https://js.arcgis.com/4.6/"></script>
 </body>
+
 </html>
