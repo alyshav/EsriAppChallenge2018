@@ -2,6 +2,7 @@ https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-RouteTa
 https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-BufferParameters.html
 https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-DirectionsFeatureSet.html
 https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-DistanceParameters.html
+https://developers.arcgis.com/javascript/latest/sample-code/widgets-directions/index.html
 
 User wants to calculate savings per year and see comparison to average gas vehicle:
 -- user input:

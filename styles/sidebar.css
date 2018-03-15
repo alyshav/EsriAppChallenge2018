@@ -6,7 +6,7 @@ html, body {
 
 .sidebar {
     padding-top: 50px;
-    width: 300px;
+    width: 400px;
     height: 100%;
     z-index: 100;
     position: absolute;
@@ -16,12 +16,12 @@ html, body {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f2f2f2; 
 }
  
 /* Handle */
@@ -47,7 +47,7 @@ html, body {
 }
 
 .colouredpill {
-    font-size: 16px;
+    font-size: 12px;
     text-align: center;
 }
 
@@ -58,7 +58,7 @@ html, body {
 
 
 .iconpilltext {
-    top: 3px !important;
+    top: 1px !important;
 }
 
 .well {
@@ -116,22 +116,22 @@ div.sidebar {
 }
 
 .mappanel {
-    margin-left: 299px;
+    margin-left: 399px;
     position: relative;        
 }
 
 
 .drawicons {
     margin-bottom: 10px;
-    float: right;
-    margin-right: 50px;
+    /*float: right;
+    margin-right: 50px;*/
 }
 
 .drawpanel {
     /*height: 150px;*/
 }
 
-.calculate, .setlocation {
+.calculate, .setlocation, .drawicons {
     text-align: center;
 }
 
