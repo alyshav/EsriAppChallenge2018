@@ -23,3 +23,4 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 * https://www2.gov.bc.ca/gov/content/governments/services-for-government/bc-bid-resources/goods-and-services-catalogue/ev-charging-stations
 * data.vancouver.ca/datacatalogue/index.htm
 * Font Awesome icons: https://fontawesome.com/
+* https://use.fontawesome.com/releases/v5.0.8/svgs/solid/map-marker-alt.svg

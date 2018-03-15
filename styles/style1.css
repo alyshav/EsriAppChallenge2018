@@ -6,8 +6,17 @@ body {
 }
 
 .logo {
-    height: 45px;
+    height: 35px;
     margin-top: 5px;
+}
+
+.goelectric {
+    margin-left: 10px;
+}
+
+.bytext {
+    margin-left: 10px;
+    margin-right: -5px;
 }
 
 .content {
