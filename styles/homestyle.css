@@ -22,3 +22,40 @@ body p {
     margin-bottom: 15px;
     padding: 0;
 }
+
+
+#banner {
+    background-image: url("../imgs/banner.png");
+    background-position: center;
+    height: 500px;
+}
+
+#banner-text {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 20px;
+    width: 33%;
+    margin: 2rem;
+    float: left;
+    font-size: 1.2rem;
+    margin-top: 200px;
+    margin-left: 100px;
+}
+
+h2 {
+    font-size: 3em;
+    margin: 0 0 0 0;
+    padding-bottom: 15px;
+}
+
+.thumbs {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.cards {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
