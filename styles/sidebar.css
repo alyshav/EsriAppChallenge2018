@@ -6,7 +6,7 @@ html, body {
 
 .sidebar {
     padding-top: 50px;
-    width: 400px;
+    width: 22.5em;
     height: 100%;
     z-index: 100;
     position: absolute;
@@ -116,7 +116,7 @@ div.sidebar {
 }
 
 .mappanel {
-    margin-left: 399px;
+    margin-left: 22.5em;
     position: relative;        
 }
 

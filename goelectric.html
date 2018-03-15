@@ -82,22 +82,23 @@
             <div class="wellheading">Home & Work Destinations</div><br/>           
             <div class="drawicons">
                 Set Home
-                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>              
-                <button class="action-button glyphicon glyphicon-trash" id="homeResetBtn" type="button" title="Clear Home"></button> 
+                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>                             
                 Set Workplace
-                <button class="action-button glyphicon glyphicon-briefcase" id="destButton" type="button" title="Set Workplace"></button>              
-                <button class="action-button glyphicon glyphicon-trash" id="destResetBtn" type="button" title="Clear Workplace"></button>        
+                <button class="action-button glyphicon glyphicon-briefcase" id="destButton" type="button" title="Set Workplace"></button>
+                <br/>
+                Clear Destinations            
+                <button class="action-button glyphicon glyphicon-trash" id="ResetBtn" type="button" title="Clear Markers"></button>        
             </div>
             <div class="calculate">
                 <button class="btn btn-primary btn-small">Calculate Savings </button>
             </div>
         </div>
         <div class="well greenwell">
-            <div class="subtext">Distance Driven each Day</div>
+            <div class="subtext">Distance Driven per Year</div>
             <div class="totalsavingsvalue">150 km</div>
         </div>   
         <div class="well greenwell">
-            <div class="subtext">Total Savings</div>
+            <div class="subtext">Total Fuel Savings per Year</div>
             <span class="totalsavingsvalue">$15000</span>
         </div>
         <div class="well greenwell">
@@ -114,6 +115,7 @@
         <div class="well redwell">
             <div class="wellheading">Instructions</div>
             Find charging stations nearby!
+            <br /> also put in time of day!!
         </div>
         <div class="well bluewell drawpanel">
             <div class="wellheading">Set Location</div><br/>           
@@ -267,6 +269,11 @@
            "esri/layers/GraphicsLayer",
            "esri/widgets/Legend",
            "esri/widgets/BasemapToggle",
+           "esri/widgets/Locate",
+           "esri/tasks/RouteTask",
+           "esri/tasks/support/RouteParameters",
+           "esri/tasks/support/FeatureSet",
+           "esri/config",
 
       // Bootstrap
            "bootstrap/Collapse",
@@ -292,14 +299,52 @@
              Graphic,
              GraphicsLayer,
              Legend,
-             BasemapToggle
+             BasemapToggle,
+             Locate,
+             RouteTask,
+             RouteParameters,
+             FeatureSet,
+             config
            ) {
 
-             /******************************************************************
-             *
-             * App settings
-             * 
-             ******************************************************************/
+             // Proxy the route requests to avoid prompt for log in
+             urlUtils.addProxyRule({
+                 urlPrefix: "route.arcgis.com",
+                 proxyUrl: "/proxy/PHP/proxy.php"
+             });
+
+             // Point the URL to a valid route service
+             var routeTask = new RouteTask({
+                 url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+             });
+
+             // The stops and route result will be stored in this layer
+             var routeLyr = new GraphicsLayer();
+
+             // Setup the route parameters
+             var routeParams = new RouteParameters({
+                 stops: new FeatureSet(),
+                 outSpatialReference: { // autocasts as new SpatialReference()
+                     wkid: 3857
+                 }
+             });
+             // Define the symbology used to display the stops
+             var stopSymbol = {
+                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                 style: "cross",
+                 size: 15,
+                 outline: { // autocasts as new SimpleLineSymbol()
+                     width: 4
+                 }
+             };
+
+             // Define the symbology used to display the route
+             var routeSymbol = {
+                 type: "simple-line", // autocasts as SimpleLineSymbol()
+                 color: [0, 0, 255, 0.5],
+                 width: 5
+             };
+
              app = {
                  center: [-123.10043397545394, 49.25567607806475],
                  scale: 144447,
@@ -335,7 +380,7 @@
              // Map
              var map = new Map({
                  basemap: app.basemap,
-                 layers: [tempGraphicsLayer, tempGraphicsLayer2]
+                 layers: [tempGraphicsLayer, tempGraphicsLayer2, routeLyr]
              });
              app.mapView = new MapView({
                  container: "mapViewDiv",
@@ -351,20 +396,29 @@
                  }
              });
 
-             app.mapView.ui.move(["zoom", "compass"], "top-left");
-
+             app.mapView.ui.move(["zoom"], "top-left");
 
              // Set the active view to scene
              app.activeView = app.mapView;
+
+             // locator widget
+             var locateBtn = new Locate({
+                 view: app.mapView
+             });
+
+             //Add the locate widget to the top left corner of the view
+             app.mapView.ui.add(locateBtn, {
+                 position: "top-left"
+             });
+
+             app.mapView.ui.move(["compass"], "top-left");
 
              // Create the search widget and add it to the navbar instead of view
              app.searchWidget = new Search({
                  view: app.activeView
              }, "searchWidgetDiv");
 
-
-
-
+             /* charging station template & add csv layer */
              var chargingstationtemplate = { // autocasts as new PopupTemplate()
                  title: "Charging Station at {ADDRESS}",
                  content: "<p>Lot operated by {LOT_OPERATOR}</p>",
@@ -400,7 +454,7 @@
              map.add(csvLayer);
 
 
-             /******* ADD THINGS ***********/
+             /******* ADD legend & points ***********/
              app.mapView.when(function () {
 
                  var legend = new Legend({
@@ -436,6 +490,32 @@
                      }
                  });
 
+                 function addStop(event) {
+                     // Execute the route task if 2 or more stops are input
+                     routeParams.stops.features.push(event);
+                     if (routeParams.stops.features.length >= 2) {
+                         routeTask.solve(routeParams).then(showRoute);
+                     }
+                 }
+
+                 var routeResult = [];
+
+                 // Adds the solved route to the map as a graphic
+                 function showRoute(data) {
+                     routeResult = data.routeResults[0].route;
+                     routeResult.symbol = routeSymbol;
+                     routeLyr.add(routeResult);
+                 }
+
+                 //Clears all routes
+                 function clearRoutes() {
+                     for (var i = routeParams.stops.features.length - 1; i >= 0; i--) {
+                        routeLyr.remove(routeParams.stops.features.splice(i, 1)[0]);
+                     }
+                     routeResult = [];                    
+                     routeLyr.removeAll();
+                 }
+
                  // ************************************************************
                  // Get the completed graphic from the event and add it to view.
                  // This event fires when user presses
@@ -443,16 +523,20 @@
                  //  * Double-clicks to finish sketching polyline or polygon.
                  //  * Clicks to finish sketching a point geometry.
                  // ***********************************************************
+                 var home = [];
+                 var dest = [];
                  sketchViewModelHome.on("draw-complete", function (evt) {
                      // add the graphic to the graphics layer
-                     //console.log(evt);
                      tempGraphicsLayer.add(evt.graphic);
+                     home = evt.graphic;
+                     addStop(evt.graphic);
                      setActiveButton();
                  });
                  sketchViewModelDest.on("draw-complete", function (evt) {
                      // add the graphic to the graphics layer
-                     console.log(evt);
                      tempGraphicsLayer2.add(evt.graphic);
+                     dest = evt.graphic;
+                     addStop(evt.graphic);
                      setActiveButton();
                  });
                  // *************************************
@@ -471,7 +555,6 @@
                  // *************************************
                  var drawDestButton = document.getElementById("destButton");
                  drawDestButton.onclick = function (event) {
-                     console.log(event);
                      // set the sketch to create a point geometry
                      sketchViewModelDest.create("point");
                      setActiveButton(this);
@@ -480,23 +563,17 @@
 
 
                  // **************
-                 // Home reset button
+                 // reset button
                  // **************
-                 document.getElementById("homeResetBtn").onclick = function () {
+                 document.getElementById("ResetBtn").onclick = function () {
                      tempGraphicsLayer.removeAll();
                      sketchViewModelHome.reset();
-                     setActiveButton();
-                     document.getElementById("homeButton").disabled = false;
-                 };
-
-                 // **************
-                 // dest reset button
-                 // **************
-                 document.getElementById("destResetBtn").onclick = function () {
-                     tempGraphicsLayer2.removeAll();
                      sketchViewModelDest.reset();
-                     setActiveButton();
+                     document.getElementById("homeButton").disabled = false;
                      document.getElementById("destButton").disabled = false;
+                     tempGraphicsLayer2.removeAll();                     
+                     setActiveButton();                     
+                     clearRoutes();
                  };
 
                  function setActiveButton(selectedButton) {
