@@ -88,14 +88,21 @@
                 <br/>
                 Clear Markers            
                 <button class="action-button glyphicon glyphicon-trash" id="ResetBtn" type="button" title="Clear Markers"></button>        
-            </div>
-            <div class="wellheading">2) Set Time Span</div><br/>           
+            </div>                 
+            <div class="wellheading">2) Select Electric Vehicle Model (EV)</div>
+             <select id="selectVehicleModel" class="form-control">
+                <option value="fordfocuselectric">Ford Focus Electric</option>
+                <option value="nissanleaf">Nissan Leaf</option>
+                <option value="teslamodels">Tesla Model S</option>
+            </select>
+
+            <!--<div class="wellheading">2) Set Time Span</div><br/>      
             <div class="drawicons">
                 <div class="slidecontainer">
                   <p>Number of days:</p>
                   <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="well greenwell">
             <div class="subtext">Distance Driven</div>
@@ -216,6 +223,15 @@
             <p>
                 <b>Charging Stations</b> are denoted by plugs with leaves. Click on the icons to view more information!
             </p>
+            </div>
+            <div class="well redwell">
+            <div class="wellheading">Resources for Vancouverites</div><br/>
+                <ul>
+                    <li><a href="https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html" target="_blank">Electric vehicles available in BC</a></li>
+                    <li><a href="https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle.html" target="_blank">Buying & Owning an electric vehicle</a></li>
+                    <li><a href="https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/geography.html" target="_blank">Geography & electric vehicles</a></li>
+                    <li><a href="https://www.bchydro.com/powersmart/electric-vehicles/charging/charging-at-home.html" target="_blank">Charging an electric vehicle at home</a></li>
+                </ul>
             <br/>
         </div>
       </div>
@@ -480,7 +496,7 @@
                      view: app.mapView,
                      layerInfos: [{
                          layer: csvLayer,
-                         title: "Charging Stations"
+                         title: "Charging Station"
                      }
                      ]
                  });
@@ -533,8 +549,8 @@
                      //TODO: Update these:
                      var dist = result.lengths / 1000;
                      distDriven.innerHTML = (dist).toFixed(2).toString();
-                     fuelSavings.innerHTML = (dist*500).toFixed(2).toString();
-                     cFootprint.innerHTML = (dist*5).toFixed(2).toString();
+                     fuelSavings.innerHTML = (dist * 500).toFixed(2).toString();
+                     cFootprint.innerHTML = (dist * 5).toFixed(2).toString();
                  }
 
                  var routeResult = [];
@@ -775,6 +791,10 @@
              query("#selectBasemapPanel").on("change", function (e) {
                  app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
                .dataset.vector;
+             });
+
+             query("#selectVehicleModel").on("change", function (e) {
+                 console.log(e.target.options[e.target.selectedIndex].value);
              });
 
              // Set view padding for widgets based on navbar position
