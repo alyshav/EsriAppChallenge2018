@@ -6,9 +6,24 @@ body {
     font-family: "Open Sans", Arial, sans-serif;
 }
 
+
 .logo {
-    height: 45px;
+    height: 30px;
     margin-top: 5px;
+}
+
+.goelectric {
+    margin-left: 15px;
+}
+
+.mapit {
+    height: 20px;
+    margin-top: 2px;
+}
+
+.bytext {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .content {
