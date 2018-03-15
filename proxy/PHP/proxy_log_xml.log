@@ -1848,3 +1848,182 @@
 03-15-18 02:06:09 | Using session token
 03-15-18 02:06:09 | Ok to proxy
 03-15-18 02:06:09 | Proxy complete
+ 
+03-15-18 15:03:19 | GET detected
+03-15-18 15:03:19 | Resource using OAuth
+03-15-18 15:03:20 | Exchanging portal token for server-specific token for https://route.arcgis.com
+03-15-18 15:03:21 | Adding token to session
+03-15-18 15:03:21 | Ok to proxy
+03-15-18 15:03:21 | Proxy complete
+ 
+03-15-18 15:03:21 | GET detected
+03-15-18 15:03:22 | Using session token
+03-15-18 15:03:23 | Ok to proxy
+03-15-18 15:03:23 | Proxy complete
+ 
+03-15-18 15:05:08 | GET detected
+03-15-18 15:05:08 | Using session token
+03-15-18 15:05:08 | Ok to proxy
+03-15-18 15:05:09 | Proxy complete
+ 
+03-15-18 15:05:09 | GET detected
+03-15-18 15:05:09 | Using session token
+03-15-18 15:05:10 | Ok to proxy
+03-15-18 15:05:10 | Proxy complete
+ 
+03-15-18 15:12:04 | GET detected
+03-15-18 15:12:05 | Using session token
+03-15-18 15:12:05 | Ok to proxy
+03-15-18 15:12:05 | Proxy complete
+ 
+03-15-18 15:19:38 | GET detected
+03-15-18 15:19:39 | Resource using OAuth
+03-15-18 15:19:39 | Exchanging portal token for server-specific token for https://route.arcgis.com
+03-15-18 15:19:40 | Adding token to session
+03-15-18 15:19:40 | Ok to proxy
+03-15-18 15:19:40 | Proxy complete
+ 
+03-15-18 15:19:40 | GET detected
+03-15-18 15:19:41 | Using session token
+03-15-18 15:19:42 | Ok to proxy
+03-15-18 15:19:42 | Proxy complete
+ 
+03-15-18 15:19:58 | GET detected
+03-15-18 15:19:58 | Using session token
+03-15-18 15:19:58 | Ok to proxy
+03-15-18 15:19:58 | Proxy complete
+ 
+03-15-18 15:19:58 | GET detected
+03-15-18 15:19:59 | Using session token
+03-15-18 15:20:00 | Ok to proxy
+03-15-18 15:20:00 | Proxy complete
+ 
+03-15-18 15:20:09 | GET detected
+03-15-18 15:20:09 | Using session token
+03-15-18 15:20:09 | Ok to proxy
+03-15-18 15:20:09 | Proxy complete
+ 
+03-15-18 15:20:10 | GET detected
+03-15-18 15:20:10 | Using session token
+03-15-18 15:20:11 | Ok to proxy
+03-15-18 15:20:11 | Proxy complete
+ 
+03-15-18 15:24:38 | GET detected
+03-15-18 15:24:38 | Using session token
+03-15-18 15:24:39 | Ok to proxy
+03-15-18 15:24:39 | Proxy complete
+ 
+03-15-18 15:24:39 | GET detected
+03-15-18 15:24:39 | Using session token
+03-15-18 15:24:40 | Ok to proxy
+03-15-18 15:24:41 | Proxy complete
+ 
+03-15-18 15:26:29 | GET detected
+03-15-18 15:26:29 | Using session token
+03-15-18 15:26:30 | Ok to proxy
+03-15-18 15:26:30 | Proxy complete
+ 
+03-15-18 15:26:30 | GET detected
+03-15-18 15:26:30 | Using session token
+03-15-18 15:26:31 | Ok to proxy
+03-15-18 15:26:31 | Proxy complete
+ 
+03-15-18 15:26:36 | GET detected
+03-15-18 15:26:37 | Using session token
+03-15-18 15:26:37 | Ok to proxy
+03-15-18 15:26:37 | Proxy complete
+ 
+03-15-18 15:26:37 | GET detected
+03-15-18 15:26:37 | Using session token
+03-15-18 15:26:38 | Ok to proxy
+03-15-18 15:26:38 | Proxy complete
+ 
+03-15-18 15:26:42 | GET detected
+03-15-18 15:26:42 | Using session token
+03-15-18 15:26:43 | Ok to proxy
+03-15-18 15:26:43 | Proxy complete
+ 
+03-15-18 15:26:43 | GET detected
+03-15-18 15:26:43 | Using session token
+03-15-18 15:26:44 | Ok to proxy
+03-15-18 15:26:44 | Proxy complete
+ 
+03-15-18 15:32:59 | GET detected
+03-15-18 15:32:59 | Using session token
+03-15-18 15:33:00 | Ok to proxy
+03-15-18 15:33:00 | Proxy complete
+ 
+03-15-18 15:33:00 | GET detected
+03-15-18 15:33:00 | Using session token
+03-15-18 15:33:01 | Ok to proxy
+03-15-18 15:33:01 | Proxy complete
+ 
+03-15-18 15:33:33 | GET detected
+03-15-18 15:33:33 | Using session token
+03-15-18 15:33:34 | Ok to proxy
+03-15-18 15:33:34 | Proxy complete
+ 
+03-15-18 15:33:34 | GET detected
+03-15-18 15:33:34 | Using session token
+03-15-18 15:33:35 | Ok to proxy
+03-15-18 15:33:35 | Proxy complete
+ 
+03-15-18 15:33:46 | GET detected
+03-15-18 15:33:46 | Using session token
+03-15-18 15:33:47 | Ok to proxy
+03-15-18 15:33:47 | Proxy complete
+ 
+03-15-18 15:33:47 | GET detected
+03-15-18 15:33:48 | Using session token
+03-15-18 15:33:49 | Ok to proxy
+03-15-18 15:33:49 | Proxy complete
+ 
+03-15-18 15:33:51 | GET detected
+03-15-18 15:33:51 | Using session token
+03-15-18 15:33:52 | Ok to proxy
+03-15-18 15:33:52 | Proxy complete
+ 
+03-15-18 15:33:52 | GET detected
+03-15-18 15:33:52 | Using session token
+03-15-18 15:33:53 | Ok to proxy
+03-15-18 15:33:53 | Proxy complete
+ 
+03-15-18 15:34:08 | GET detected
+03-15-18 15:34:08 | Using session token
+03-15-18 15:34:09 | Ok to proxy
+03-15-18 15:34:09 | Proxy complete
+ 
+03-15-18 15:34:09 | GET detected
+03-15-18 15:34:09 | Using session token
+03-15-18 15:34:10 | Ok to proxy
+03-15-18 15:34:10 | Proxy complete
+ 
+03-15-18 15:34:12 | GET detected
+03-15-18 15:34:12 | Using session token
+03-15-18 15:34:13 | Ok to proxy
+03-15-18 15:34:13 | Proxy complete
+ 
+03-15-18 15:34:13 | GET detected
+03-15-18 15:34:13 | Using session token
+03-15-18 15:34:14 | Ok to proxy
+03-15-18 15:34:14 | Proxy complete
+ 
+03-15-18 15:35:43 | GET detected
+03-15-18 15:35:43 | Using session token
+03-15-18 15:35:44 | Ok to proxy
+03-15-18 15:35:44 | Proxy complete
+ 
+03-15-18 15:35:44 | GET detected
+03-15-18 15:35:44 | Using session token
+03-15-18 15:35:45 | Ok to proxy
+03-15-18 15:35:45 | Proxy complete
+ 
+03-15-18 15:37:46 | GET detected
+03-15-18 15:37:46 | Using session token
+03-15-18 15:37:47 | Ok to proxy
+03-15-18 15:37:47 | Proxy complete
+ 
+03-15-18 15:37:47 | GET detected
+03-15-18 15:37:47 | Using session token
+03-15-18 15:37:48 | Ok to proxy
+03-15-18 15:37:48 | Proxy complete
