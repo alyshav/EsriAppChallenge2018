@@ -463,7 +463,8 @@
                   });
 
                   var serviceAreaTask = new ServiceAreaTask({
-                      url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Service Area"
+                      // url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Service%20Area"
+                      url: "https://route.arcgis.com/arcgis/rest/services/World/ServiceAreas/NAServer/ServiceArea_World"
                   });
 
                   // The stops and route result will be stored in this layer
@@ -627,7 +628,7 @@
                   /* service area
                   var serviceAParams = new ServiceAreaParameters({
                   defaultBreaks: [5],
-                  //impedanceAttribute: "Length",
+                  //,
                   outSpatialReference: map.spatialReference,
                   returnFacilities: true,
                   outputPolygons: "esriNAServerServiceAreaLayer",
@@ -635,9 +636,10 @@
                   });*/
 
                   var params = new ServiceAreaParameters();
-                  params.defaultBreaks = [1];
+                  params.defaultBreaks = [10];
                   params.outSpatialReference = map.spatialReference;
                   params.returnFacilities = false;
+                  //params.impedanceAttribute = "Length";
 
                   var drivingDistBtn = document.getElementById("drivingDistBtn");
                   drivingDistBtn.onclick = function () {
@@ -661,11 +663,14 @@
                       console.log(result.serviceAreaPolygons);
                       console.log(result.serviceAreaPolygons.length);
                       for (var i = 0; i < result.serviceAreaPolygons.length; i++) {
-                          result.serviceAreaPolygons[i].setSymbol(polygonSymbol);
                           console.log("adding");
-                          tempGraphicsLayerStartPoint.add(serviceArea);
+                          console.log(result.serviceAreaPolygons[i].geometry.type);
+                          console.log(result.serviceAreaPolygons[i].symbol);
+                          result.serviceAreaPolygons[i].symbol = polygonSymbol;
+                          //result.serviceAreaPolygons[i].setAttribute("symbol", polygonSymbol);                          
+                          tempGraphicsLayerStartPoint.add(result.serviceAreaPolygons[i]);
+                          console.log("ending");
                       }
-                      console.log("ending");
                   }
 
 

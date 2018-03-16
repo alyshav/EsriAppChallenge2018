@@ -33,6 +33,8 @@ alt="Video" width="240" height="100" border="10" /></a>
 * https://www.bchydro.com/powersmart/electric-vehicles/charging/charging-at-home.html
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/geography.html
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle.html
+* http://www.driveelectricmn.org/charging/
+* https://www.caa.ca/electric-vehicles/
 
 ## Free Assets used
 * Font Awesome icons: https://fontawesome.com/
