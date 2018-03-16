@@ -34,3 +34,5 @@ x) (do we have the user enter a model they care about? or should we use a single
 NOTE: we might actually need web app builder for this. will do more research
 -- output:
 3) Feature layer
+
+-- add disclaimer about estimations

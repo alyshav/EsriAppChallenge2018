@@ -142,7 +142,7 @@
         </div>
         <div class="well redwell">
             EV owners do <a href="https://www.bchydro.com/powersmart/electric-vehicles/charging/charging-at-home.html" target="_blank">most of their charging at home</a>. 
-            When you're out and about, this tool allows you to find nearby charging stations.
+            When you're out and about, this tool allows you to find nearby charging stations to top up.
             Select a time of day, a location, and the number of minutes you would be willing to drive to find out which charging stations are close to you!
         </div>
         <div class="well bluewell">
@@ -183,6 +183,9 @@
             <span class="totalsavingsvalue">4</span>
         </div>
       </div>
+
+
+
     <!-- DRIVING RADIUS PANEL -->
       <div class="tab-pane fade" id="driving">
         <div class="well redwell">
@@ -190,7 +193,7 @@
         </div>
         <div class="well redwell">
             Have you ever wondered how far you can drive an EV on one charge?
-            This feature utilizes your selected EV's range to show how far you can travel!
+            This feature uses your selected EV's range to show how far you can travel on a full charge!
         </div>
         <div class="well bluewell">
             <div class="wellheading">Current Electric Vehicle Selected*</div>
@@ -207,12 +210,8 @@
             <div class="wellheading">Set Starting Point</div><br/>           
             <div class="drawicons">
                 Add Marker
-                <button class="action-button glyphicon glyphicon-flag" id="homeButton" type="button" title="Set Start"></button>              
-                <button class="action-button glyphicon glyphicon-trash" id="homeResetBtn" type="button" title="Clear Start"></button>        
-            </div>
-            <div class="setlocation">
-                Search Distance (in minutes)
-                <input id="distance" type="number" min="0" placeholder="e.g. 5">
+                <button class="action-button glyphicon glyphicon-flag" id="startMarkerButton" type="button" title="Set Starting Point"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="startMarkerResetButton" type="button" title="Clear Starting Point"></button>        
             </div>
             <div class="calculate">
                 <button class="btn btn-primary btn-small"> Find Possible Routes</button>
@@ -223,7 +222,10 @@
             <span class="totalsavingsvalue">4132132</span>
         </div>
       </div>
+    <!-- / DRIVING RADIUS PANEL -->
 
+
+    <!-- DISPLAY PANEL -->
       <div class="tab-pane fade" id="legend">
         <div class="well redwell">
             <div class="titlewell">Display</div>
@@ -248,6 +250,7 @@
             <div id="legendDiv"></div>
         </div>
       </div>
+      <!-- / DISPLAY PANEL -->
 
 
       <!-- HELP PANEL -->
@@ -350,6 +353,8 @@
            "esri/widgets/Directions",
            "esri/tasks/GeometryService",
            "esri/tasks/support/LengthsParameters",
+           "esri/tasks/ServiceAreaTask",
+           "esri/tasks/support/ServiceAreaParameters",
 
       // Bootstrap
            "bootstrap/Collapse",
@@ -383,7 +388,9 @@
              config,
              Directions,
              GeometryService,
-             LengthsParameters
+             LengthsParameters,
+             ServiceAreaTask,
+             ServiceAreaParameters
            ) {
 
              var distDriven = document.getElementById("distanceDriven");
@@ -416,12 +423,15 @@
                  proxyUrl: "/proxy/PHP/proxy.php"
              });
 
-             // Point the URL to a valid route service
              var routeTask = new RouteTask({
                  url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
              });
              var geometryService = new GeometryService({
                  url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer"
+             });
+
+             var geometryService = new ServiceAreaTask({
+                 url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer"
              });
 
              // The stops and route result will be stored in this layer
@@ -482,11 +492,12 @@
              // GraphicsLayer to hold graphics created via sketch view model
              var tempGraphicsLayer = new GraphicsLayer(); //home
              var tempGraphicsLayer2 = new GraphicsLayer(); //dest
+             var tempGraphicsLayerStartPoint = new GraphicsLayer();//starting point for driving distance tab
 
              // Map
              var map = new Map({
                  basemap: app.basemap,
-                 layers: [tempGraphicsLayer, tempGraphicsLayer2, routeLyr]
+                 layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, routeLyr]
              });
              app.mapView = new MapView({
                  container: "mapViewDiv",
@@ -560,7 +571,11 @@
              map.add(csvLayer);
 
 
-             /******* ADD legend & points ***********/
+             /* service area */
+             serviceAParams = new ServiceAreaParameters();
+
+
+             /******* add legend & points ***********/
              app.mapView.when(function () {
 
                  var legend = new Legend({
@@ -588,6 +603,17 @@
                  var sketchViewModelDest = new SketchViewModel({
                      view: app.mapView,
                      layer: tempGraphicsLayer2,
+                     pointSymbol: { // symbol used for points
+                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                         url: "imgs/map-marker.svg",
+                         width: "15px",
+                         height: "20px"
+                     }
+                 });
+
+                 var sketchViewModelStartPoint = new SketchViewModel({
+                     view: app.mapView,
+                     layer: tempGraphicsLayerStartPoint,
                      pointSymbol: { // symbol used for points
                          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
                          url: "imgs/map-marker.svg",
@@ -676,6 +702,11 @@
                      addStop(evt.graphic);
                      setActiveButton();
                  });
+                 sketchViewModelStartPoint.on("draw-complete", function (evt) {
+                     // add the graphic to the graphics layer
+                     tempGraphicsLayerStartPoint.add(evt.graphic);
+                     setActiveButton();
+                 });
                  // *************************************
                  // activate the sketch to create a home point
                  // *************************************
@@ -698,11 +729,33 @@
                      document.getElementById("destButton").disabled = true;
                  };
 
+                 // *************************************
+                 // activate the sketch to create a start point
+                 // *************************************
+                 var drawStartMarkerButton = document.getElementById("startMarkerButton");
+                 drawStartMarkerButton.onclick = function () {
+                     // set the sketch to create a point geometry
+                     sketchViewModelStartPoint.create("point");
+                     setActiveButton(this);
+                     document.getElementById("startMarkerButton").disabled = true;
+                 };
 
-                 // **************
-                 // reset button
-                 // **************
+                 // reset button for driving distance
+
+                 document.getElementById("startMarkerResetButton").onclick = function () {
+                     tempGraphicsLayerStartPoint.removeAll();
+                     sketchViewModelStartPoint.reset();
+                     document.getElementById("startMarkerButton").disabled = false;
+                     setActiveButton();
+                 };
+
+                 // reset button for savings calc
+
                  document.getElementById("ResetBtn").onclick = function () {
+                     clearSavingsCalcMarkers();
+                 };
+
+                 function clearSavingsCalcMarkers() {
                      tempGraphicsLayer.removeAll();
                      sketchViewModelHome.reset();
                      sketchViewModelDest.reset();
@@ -714,7 +767,7 @@
                      distDriven.innerHTML = "0";
                      fuelSavings.innerHTML = "0";
                      cFootprint.innerHTML = "0";
-                 };
+                 }
 
                  function setActiveButton(selectedButton) {
                      // focus the view to activate keyboard shortcuts for sketching
