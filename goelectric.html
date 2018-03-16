@@ -430,7 +430,7 @@
                  url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer"
              });
 
-             var geometryService = new ServiceAreaTask({
+             var serviceArea = new ServiceAreaTask({
                  url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer"
              });
 
@@ -572,7 +572,7 @@
 
 
              /* service area */
-             serviceAParams = new ServiceAreaParameters();
+             var serviceAParams = new ServiceAreaParameters();
 
 
              /******* add legend & points ***********/
