@@ -22,7 +22,7 @@ of owning an electric car and perform network analyses to find optimal charging 
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
 " target="_blank"><img src="imgs/go-electric.png" 
-alt="Video" width="240" height="180" border="10" /></a>
+alt="Video" width="240" height="100" border="10" /></a>
 
 ## Data sources used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
