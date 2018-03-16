@@ -100,6 +100,10 @@ html, body {
     font-size: 12px;
 }
 
+.notetext {
+    font-size: 10px;
+}
+
 .totalsavingsvalue {
     font-weight: 800;
     font-size: 40px;
@@ -108,6 +112,11 @@ html, body {
 .totalsavingsmeasure {
     font-weight: 800;
     font-size: 20px;
+}
+
+.vehicleselection {
+    font-weight: 800;
+    font-size: 20px;    
 }
 
 div.sidebar {
