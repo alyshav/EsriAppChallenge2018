@@ -26,6 +26,7 @@ alt="Video" width="240" height="100" border="10" /></a>
 
 ## Data sources used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
+* City Municipal Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
 
 ## References
@@ -36,3 +37,4 @@ alt="Video" width="240" height="100" border="10" /></a>
 ## Free Assets used
 * Font Awesome icons: https://fontawesome.com/
 * https://use.fontawesome.com/releases/v5.0.8/svgs/solid/map-marker-alt.svg
+* https://fontawesome.com/icons/flag?style=solid

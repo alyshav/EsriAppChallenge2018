@@ -36,7 +36,7 @@
     </div>
     <!-- Nav -->
     <ul class="nav navbar-nav calcite-nav">
-        <div class="calcite-navbar-search calcite-search-expander">
+        <div class="calcite-navbar-search">
             <div id="searchWidgetDiv"></div>
         </div>
         <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
@@ -109,10 +109,11 @@
             </div>-->
         </div>
         <div class="well bluewell drawpanel">
-            <div class="wellheading">Set Home and Destination Markers</div><br/>           
-            <div class="drawicons">
+            <div class="wellheading">Set Home and Destination Markers</div><br/>       
+            <div>
                 Set Home
-                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>                             
+                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>
+                <br/>                                 
                 Set Destination
                 <button class="action-button glyphicon glyphicon-map-marker" id="destButton" type="button" title="Set Destination"></button>
                 <br/>
@@ -123,7 +124,11 @@
         <div class="well greenwell">
             <div class="subtext">Distance Driven</div>
             <span id="distanceDriven" class="totalsavingsvalue">0</span> km
-        </div>   
+        </div>
+        <div class="well greenwell">
+            <div class="subtext">Approximate Number of Round-Trips on 1 Charge</div>
+            <span id="totalroundtrips" class="totalsavingsvalue">0</span> round trips
+        </div>                
         <div class="well greenwell">
             <div class="subtext">Fuel Savings</div>
             <span class="totalsavingsvalue">$<span id="fuelSavings">0</span></span>
@@ -214,7 +219,7 @@
                 <button class="action-button glyphicon glyphicon-trash" id="startMarkerResetButton" type="button" title="Clear Starting Point"></button>        
             </div>
             <div class="calculate">
-                <button class="btn btn-primary btn-small"> Find Possible Routes</button>
+                <button id="drivingDistBtn" class="btn btn-primary btn-small"> Find Possible Routes</button>
             </div>
         </div>
         <div class="well greenwell">
@@ -329,660 +334,766 @@
       var app;
 
       require([
-           "esri/Map",
-           "esri/views/MapView",
-           "esri/widgets/Search",
-           "esri/widgets/Popup",
-           "esri/core/watchUtils",
-           "dojo/query",
-           "dojo/on",
-           "esri/layers/CSVLayer",
-           "esri/core/urlUtils",
-           "esri/layers/FeatureLayer",
-           "esri/views/2d/draw/Draw",
-           "esri/widgets/Sketch/SketchViewModel",
-           "esri/Graphic",
-           "esri/layers/GraphicsLayer",
-           "esri/widgets/Legend",
-           "esri/widgets/BasemapToggle",
-           "esri/widgets/Locate",
-           "esri/tasks/RouteTask",
-           "esri/tasks/support/RouteParameters",
-           "esri/tasks/support/FeatureSet",
-           "esri/config",
-           "esri/widgets/Directions",
-           "esri/tasks/GeometryService",
-           "esri/tasks/support/LengthsParameters",
-           "esri/tasks/ServiceAreaTask",
-           "esri/tasks/support/ServiceAreaParameters",
+                "esri/Map",
+                "esri/views/MapView",
+                "esri/widgets/Search",
+                "esri/widgets/Popup",
+                "esri/core/watchUtils",
+                "dojo/query",
+                "dojo/on",
+                "esri/layers/CSVLayer",
+                "esri/core/urlUtils",
+                "esri/layers/FeatureLayer",
+                "esri/views/2d/draw/Draw",
+                "esri/widgets/Sketch/SketchViewModel",
+                "esri/Graphic",
+                "esri/layers/GraphicsLayer",
+                "esri/widgets/Legend",
+                "esri/widgets/BasemapToggle",
+                "esri/widgets/Locate",
+                "esri/tasks/RouteTask",
+                "esri/tasks/support/RouteParameters",
+                "esri/tasks/support/FeatureSet",
+                "esri/config",
+                "esri/widgets/Directions",
+                "esri/tasks/GeometryService",
+                "esri/tasks/support/LengthsParameters",
+                "esri/tasks/ServiceAreaTask",
+                "esri/tasks/support/ServiceAreaParameters",
+                "esri/layers/KMLLayer",
+                "esri/widgets/ScaleBar",
+                "esri/tasks/support/ServiceAreaSolveResult",
+                "esri/symbols/SimpleFillSymbol",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/Color",
 
       // Bootstrap
-           "bootstrap/Collapse",
-           "bootstrap/Dropdown",
-           "bootstrap/Tab",
+                "bootstrap/Collapse",
+                "bootstrap/Dropdown",
+                "bootstrap/Tab",
 
       // Calcite Maps
-           "calcite-maps/calcitemaps-v0.2",
-           "dojo/domReady!"
-         ], function (
-             Map,
-             MapView,
-             Search,
-             Popup,
-             watchUtils,
-             query,
-             on,
-             CSVLayer,
-             urlUtils,
-             FeatureLayer,
-             Draw,
-             SketchViewModel,
-             Graphic,
-             GraphicsLayer,
-             Legend,
-             BasemapToggle,
-             Locate,
-             RouteTask,
-             RouteParameters,
-             FeatureSet,
-             config,
-             Directions,
-             GeometryService,
-             LengthsParameters,
-             ServiceAreaTask,
-             ServiceAreaParameters
-           ) {
-
-             var distDriven = document.getElementById("distanceDriven");
-             var fuelSavings = document.getElementById("fuelSavings");
-             var cFootprint = document.getElementById("carbonFootprint");
-             var price = document.getElementById("price");
-             var range = document.getElementById("range");
-             var rangeCharging = document.getElementById("rangeCharging");
-             var vehicleselectedCharging = document.getElementById("vehicleselectedCharging");
-             var rangeDriving = document.getElementById("rangeDriving");
-             var vehicleselectedDriving = document.getElementById("vehicleselectedDriving");
-
-
-             // data from: https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
-             var vehicleModels = [["fordfocuselectric", 31199, 122, "Ford Focus Electric"],
-                                 ["miEv", 27998, 100, "Mitsubishi i-MiEV"],
-                                 ["nissanleaf", 32698, 135, "Nissan Leaf"],
-                                 ["fortwo", 26990, 109, "Smart fortwo Electric Drive"],
-                                 ["teslamodels", 77700, 286, "Tesla Model S"],
-                                 ["bmwi", 45300, 130, "BMW i3"],
-                                 ["kiasoul", 27998, 100, "KIA Soul EV"],
-                                 ["teslamodelx", 106100, 391, "Tesla Model X"],
-                                 ["chevybolt", 43000, 383, "Chevy Bolt"]];
-             // default
-             var currentModel = ["fordfocuselectric", 31199, 122, "Ford Focus Electric"];
-
-             // Proxy the route requests to avoid prompt for log in
-             urlUtils.addProxyRule({
-                 urlPrefix: "route.arcgis.com",
-                 proxyUrl: "/proxy/PHP/proxy.php"
-             });
-
-             var routeTask = new RouteTask({
-                 url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
-             });
-             var geometryService = new GeometryService({
-                 url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer"
-             });
-
-             var serviceArea = new ServiceAreaTask({
-                 url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer"
-             });
-
-             // The stops and route result will be stored in this layer
-             var routeLyr = new GraphicsLayer();
-
-             // Setup the route parameters
-             var routeParams = new RouteParameters({
-                 stops: new FeatureSet(),
-                 outSpatialReference: { // autocasts as new SpatialReference()
-                     wkid: 3857
-                 }
-             });
-             // Define the symbology used to display the stops
-             var stopSymbol = {
-                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-                 style: "cross",
-                 size: 15,
-                 outline: { // autocasts as new SimpleLineSymbol()
-                     width: 4
-                 }
-             };
-
-             // Define the symbology used to display the route
-             var routeSymbol = {
-                 type: "simple-line", // autocasts as SimpleLineSymbol()
-                 color: [248, 88, 87, 0.7],
-                 width: 5
-             };
-
-             app = {
-                 center: [-123.10043397545394, 49.25567607806475],
-                 scale: 144447,
-                 basemap: "streets-navigation-vector",
-                 viewPadding: {
-                     top: 50,
-                     bottom: 0
-                 },
-                 uiComponents: ["zoom", "compass", "attribution"],
-                 dockOptions: {
-                     position: "auto",
-                     // Custom docking breakpoints
-                     breakpoint: {
-                         width: 768,
-                         height: 768
-                     }
-                 },
-                 mapView: null,
-                 activeView: null,
-                 searchWidget: null,
-                 screenWidth: 0
-             };
-
-             /******************************************************************
-             *
-             * Create the map view and ui components
-             * 
-             ******************************************************************/
-             // GraphicsLayer to hold graphics created via sketch view model
-             var tempGraphicsLayer = new GraphicsLayer(); //home
-             var tempGraphicsLayer2 = new GraphicsLayer(); //dest
-             var tempGraphicsLayerStartPoint = new GraphicsLayer();//starting point for driving distance tab
-
-             // Map
-             var map = new Map({
-                 basemap: app.basemap,
-                 layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, routeLyr]
-             });
-             app.mapView = new MapView({
-                 container: "mapViewDiv",
-                 map: map,
-                 center: app.center,
-                 scale: app.scale,
-                 padding: app.viewPadding,
-                 popup: new Popup({
-                     dockOptions: app.dockOptions
-                 }),
-                 ui: {
-                     components: app.uiComponents
-                 }
-             });
-
-             app.mapView.ui.move(["zoom"], "top-left");
-
-             // Set the active view to scene
-             app.activeView = app.mapView;
-
-             // locator widget
-             var locateBtn = new Locate({
-                 view: app.mapView
-             });
-
-             //Add the locate widget to the top left corner of the view
-             app.mapView.ui.add(locateBtn, {
-                 position: "top-left"
-             });
-
-             app.mapView.ui.move(["compass"], "top-left");
-
-             // Create the search widget and add it to the navbar instead of view
-             app.searchWidget = new Search({
-                 view: app.activeView
-             }, "searchWidgetDiv");
-
-             /* charging station template & add csv layer */
-             var chargingstationtemplate = { // autocasts as new PopupTemplate()
-                 title: "Charging Station at {ADDRESS}",
-                 content: "<p>Lot operated by {LOT_OPERATOR}</p>",
-                 fieldInfos: [{
-                     fieldName: "ADDRESS",
-                     format: {
-                         digitSeparator: true, // Use a comma separator for large numbers
-                         places: 0 // Sets the number of decimal places to 0 and rounds up
-                     }
-                 }, {
-                     fieldName: "LOT_OPERATOR",
-                     format: {
-                         digitSeparator: true,
-                         places: 0
-                     }
-                 }]
-             };
-
-             var csvLayer = new CSVLayer({
-                 url: "data/chargingStations.csv",
-                 popupTemplate: chargingstationtemplate
-             });
-
-             csvLayer.renderer = {
-                 type: "simple",
-                 symbol: {
-                     type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-                     url: "imgs/charging-station.png",
-                     width: "20px",
-                     height: "20px"
-                 }
-             };
-             map.add(csvLayer);
-
-
-             /* service area */
-             var serviceAParams = new ServiceAreaParameters();
-
-
-             /******* add legend & points ***********/
-             app.mapView.when(function () {
-
-                 var legend = new Legend({
-                     container: "legendDiv",
-                     view: app.mapView,
-                     layerInfos: [{
-                         layer: csvLayer,
-                         title: "Charging Station"
-                     }
-                     ]
-                 });
-
-                 // create a new sketch view model
-                 var sketchViewModelHome = new SketchViewModel({
-                     view: app.mapView,
-                     layer: tempGraphicsLayer,
-                     pointSymbol: { // symbol used for points
-                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-                         url: "imgs/house.png",
-                         width: "20px",
-                         height: "20px"
-                     }
-                 });
-
-                 var sketchViewModelDest = new SketchViewModel({
-                     view: app.mapView,
-                     layer: tempGraphicsLayer2,
-                     pointSymbol: { // symbol used for points
-                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-                         url: "imgs/map-marker.svg",
-                         width: "15px",
-                         height: "20px"
-                     }
-                 });
-
-                 var sketchViewModelStartPoint = new SketchViewModel({
-                     view: app.mapView,
-                     layer: tempGraphicsLayerStartPoint,
-                     pointSymbol: { // symbol used for points
-                         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-                         url: "imgs/map-marker.svg",
-                         width: "15px",
-                         height: "20px"
-                     }
-                 });
-
-                 function addStop(event) {
-                     // Execute the route task if 2 or more stops are input
-                     routeParams.stops.features.push(event);
-                     if (routeParams.stops.features.length >= 2) {
-                         routeTask.solve(routeParams).then(showRoute);
-                     }
-                 }
-
-                 function measureDistance(geometry) {
-                     var lengthParams = new LengthsParameters();
-                     console.log(geometry);
-                     lengthParams.polylines = [geometry];
-                     lengthParams.lengthUnit = geometryService.UNIT_METER;
-                     lengthParams.calculationType = 'geodesic';
-                     lengthParams.geodesic = true;
-                     geometryService.lengths(lengthParams).then(outputDistance);
-                 }
-
-                 function outputDistance(result) {
-                     //console.log("Displaying result:");
-                     //console.log(result.lengths.toString());
-
-                     //TODO: Update these when we have real values:
-                     var dist = result.lengths / 1000;
-                     distDriven.innerHTML = (dist).toFixed(2).toString();
-                     fuelSavings.innerHTML = (dist * 500).toFixed(2).toString();
-                     cFootprint.innerHTML = (dist * 5).toFixed(2).toString();
-                 }
-
-                 var routeResult = [];
-
-                 // Adds the solved route to the map as a graphic
-                 function showRoute(data) {
-                     routeResult = data.routeResults[0].route;
-                     routeResult.symbol = routeSymbol;
-                     routeLyr.add(routeResult);
-                     measureDistance(routeResult.geometry);
-                 }
-
-                 var directions = new Directions({
-                     view: app.mapView
-                 });
-                 function useDirections() {
-                     app.mapView.ui.add(directions, "top-right");
-                 }
-                 function closeDirections() {
-                     app.mapView.ui.remove(directions);
-                     directions.destroy();
-                 }
-
-                 //Clears all routes
-                 function clearRoutes() {
-                     for (var i = routeParams.stops.features.length - 1; i >= 0; i--) {
-                         routeLyr.remove(routeParams.stops.features.splice(i, 1)[0]);
-                     }
-                     routeResult = [];
-                     routeLyr.removeAll();
-                 }
-
-                 // ************************************************************
-                 // Get the completed graphic from the event and add it to view.
-                 // This event fires when user presses
-                 //  * "C" key to finish sketching point, polygon or polyline.
-                 //  * Double-clicks to finish sketching polyline or polygon.
-                 //  * Clicks to finish sketching a point geometry.
-                 // ***********************************************************
-                 sketchViewModelHome.on("draw-complete", function (evt) {
-                     // add the graphic to the graphics layer
-                     tempGraphicsLayer.add(evt.graphic);
-                     home = evt.graphic;
-                     addStop(evt.graphic);
-                     setActiveButton();
-                 });
-                 sketchViewModelDest.on("draw-complete", function (evt) {
-                     // add the graphic to the graphics layer
-                     tempGraphicsLayer2.add(evt.graphic);
-                     dest = evt.graphic;
-                     addStop(evt.graphic);
-                     setActiveButton();
-                 });
-                 sketchViewModelStartPoint.on("draw-complete", function (evt) {
-                     // add the graphic to the graphics layer
-                     tempGraphicsLayerStartPoint.add(evt.graphic);
-                     setActiveButton();
-                 });
-                 // *************************************
-                 // activate the sketch to create a home point
-                 // *************************************
-                 var drawHomeButton = document.getElementById("homeButton");
-                 drawHomeButton.onclick = function () {
-                     // set the sketch to create a point geometry
-                     sketchViewModelHome.create("point");
-                     setActiveButton(this);
-                     document.getElementById("homeButton").disabled = true;
-                 };
-
-                 // *************************************
-                 // activate the sketch to create a dest point
-                 // *************************************
-                 var drawDestButton = document.getElementById("destButton");
-                 drawDestButton.onclick = function (event) {
-                     // set the sketch to create a point geometry
-                     sketchViewModelDest.create("point");
-                     setActiveButton(this);
-                     document.getElementById("destButton").disabled = true;
-                 };
-
-                 // *************************************
-                 // activate the sketch to create a start point
-                 // *************************************
-                 var drawStartMarkerButton = document.getElementById("startMarkerButton");
-                 drawStartMarkerButton.onclick = function () {
-                     // set the sketch to create a point geometry
-                     sketchViewModelStartPoint.create("point");
-                     setActiveButton(this);
-                     document.getElementById("startMarkerButton").disabled = true;
-                 };
-
-                 // reset button for driving distance
-
-                 document.getElementById("startMarkerResetButton").onclick = function () {
-                     tempGraphicsLayerStartPoint.removeAll();
-                     sketchViewModelStartPoint.reset();
-                     document.getElementById("startMarkerButton").disabled = false;
-                     setActiveButton();
-                 };
-
-                 // reset button for savings calc
-
-                 document.getElementById("ResetBtn").onclick = function () {
-                     clearSavingsCalcMarkers();
-                 };
-
-                 function clearSavingsCalcMarkers() {
-                     tempGraphicsLayer.removeAll();
-                     sketchViewModelHome.reset();
-                     sketchViewModelDest.reset();
-                     document.getElementById("homeButton").disabled = false;
-                     document.getElementById("destButton").disabled = false;
-                     tempGraphicsLayer2.removeAll();
-                     setActiveButton();
-                     clearRoutes();
-                     distDriven.innerHTML = "0";
-                     fuelSavings.innerHTML = "0";
-                     cFootprint.innerHTML = "0";
-                 }
-
-                 function setActiveButton(selectedButton) {
-                     // focus the view to activate keyboard shortcuts for sketching
-                     app.mapView.focus();
-                     //console.log(selectedButton.id);
-                     var elements = document.getElementsByClassName("active");
-                     for (var i = 2; i < elements.length; i++) {
-                         // skip the first element because it'll remove the active class from our side panel nav
-                         //console.log(elements[i].id)
-                         elements[i].classList.remove("active");
-                     }
-                     if (selectedButton) {
-                         selectedButton.classList.add("active");
-                     }
-                 }
-             });
-
-
-             /******************************************************************
-             *
-             * Synchronize the view, search and popup
-             * 
-             ******************************************************************/
-
-             // Tab - toggle between map and scene view
-             query(".calcite-navbar li a[data-toggle='tab']").on("click", function (
-             e) {
-                 syncTabs(e);
-
-                 syncViews(app.mapView);
-                 app.activeView = app.mapView;
-
-                 syncSearch();
-             });
-
-             // Tabs - sync ui menus
-             function syncTabs(e) {
-                 query(".calcite-navbar li.active").removeClass("active");
-                 query(e.target).addClass("active");
-             }
-
-             // Views - sync viewpoint and popup
-             function syncViews(fromView, toView) {
-                 watchUtils.whenTrueOnce(toView, "ready").then(function (result) {
-                     watchUtils.whenTrueOnce(toView, "stationary").then(function (
-                 result) {
-                         toView.goTo(fromView.viewpoint);
-                         toView.popup.reposition();
-                     });
-                 });
-             }
-
-             // Search - sync search location and popup
-             function syncSearch() {
-                 app.searchWidget.view = app.activeView;
-                 if (app.searchWidget.selectedResult) {
-                     app.searchWidget.search(app.searchWidget.selectedResult.name);
-                     app.activeView.popup.reposition();
-                 }
-             }
-
-             /******************************************************************
-             *
-             * Show and hide the panels and popup
-             * 
-             ******************************************************************/
-
-             // Views - Listen to view size changes to show/hide panels
-             app.mapView.watch("size", viewSizeChange);
-
-             function viewSizeChange(screenSize) {
-                 if (app.screenWidth !== screenSize[0]) {
-                     app.screenWidth = screenSize[0];
-                     setPanelVisibility();
-                 }
-             }
-
-             // Popups - Listen to popup changes to show/hide panels
-             app.mapView.popup.watch(["visible", "currentDockPosition"],
-             setPanelVisibility);
-
-             // Panels - Show/hide the panel when popup is docked
-             function setPanelVisibility() {
-                 var isMobileScreen = app.activeView.widthBreakpoint === "xsmall" ||
-               app.activeView.widthBreakpoint ===
-               "small",
-               isDockedVisible = app.activeView.popup.visible && app.activeView.popup
-               .currentDockPosition,
-               isDockedBottom = app.activeView.popup.currentDockPosition && app.activeView
-               .popup.currentDockPosition
-               .indexOf("bottom") > -1,
-               isDockedTop = app.activeView.popup.currentDockPosition && app.activeView
-               .popup.currentDockPosition
-               .indexOf("top") > -1;
-                 // Mobile (xsmall/small)
-                 if (isMobileScreen) {
-                     if (isDockedVisible && isDockedBottom) {
-                         query(".calcite-panels").addClass("invisible");
-                     } else {
-                         query(".calcite-panels").removeClass("invisible");
-                     }
-                 } else { // Desktop (medium+)
-                     if (isDockedVisible && isDockedTop) {
-                         query(".calcite-panels").addClass("invisible");
-                     } else {
-                         query(".calcite-panels").removeClass("invisible");
-                     }
-                 }
-             }
-
-             // Panels - Dock popup when panels show (desktop or mobile)
-             query(".calcite-panels .panel").on("show.bs.collapse", function (e) {
-                 if (app.activeView.popup.currentDockPosition || app.activeView.widthBreakpoint ===
-               "xsmall") {
-                     app.activeView.popup.dockEnabled = false;
-                 }
-             });
-
-             // Panels - Undock popup when panels hide (mobile only)
-             query(".calcite-panels .panel").on("hide.bs.collapse", function (e) {
-                 if (app.activeView.widthBreakpoint === "xsmall") {
-                     app.activeView.popup.dockEnabled = true;
-                 }
-             });
-
-             // Popup
-             query(".esri-popup__header-title").on("click", function (e) {
-                 query(".esri-popup__main-container").toggleClass(
-               "esri-popup-collapsed");
-                 app.activeView.popup.reposition();
-             } .bind(this));
-
-             /******************************************************************
-             *
-             * Apply Calcite Maps CSS classes to change application on the fly
-             *
-             * For more information about the CSS styles or Sass build visit:
-             * http://github.com/esri/calcite-maps
-             * 
-             ******************************************************************/
-
-             var cssSelectorUI = ".calcite-navbar, .calcite-panels",
-             cssSelectorMap = ".calcite-map";
-
-
-             // Basemap events
-             query("#selectBasemapPanel").on("change", function (e) {
-                 app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
-               .dataset.vector;
-             });
-
-
-             // Change vehicle model event
-             query("#selectVehicleModel").on("change", function (e) {
-                 var newModel = e.target.options[e.target.selectedIndex].value;
-                 for (var i = 0; i < vehicleModels.length; i++) {
-                     if (vehicleModels[i][0] === newModel) {
-                         currentModel = vehicleModels[i];
-                         //console.log(currentModel);
-                         price.innerHTML = currentModel[1].toLocaleString().toString();
-                         range.innerHTML = currentModel[2].toLocaleString().toString();
-                         rangeCharging.innerHTML = currentModel[2].toLocaleString().toString();
-                         vehicleselectedCharging.innerHTML = currentModel[3].toString();
-                         rangeDriving.innerHTML = currentModel[2].toLocaleString().toString();
-                         vehicleselectedDriving.innerHTML = currentModel[3].toString();
-                         break;
-                     }
-                 }
-             });
-
-             // Set view padding for widgets based on navbar position
-             function setViewPadding(layout) {
-                 var padding, uiPadding;
-                 // Top
-                 if (layout === "calcite-nav-top") {
-                     padding = {
-                         padding: {
-                             top: 50,
-                             bottom: 0
-                         }
-                     };
-                     uiPadding = {
-                         padding: {
-                             top: 15,
-                             right: 15,
-                             bottom: 30,
-                             left: 15
-                         }
-                     };
-                 } else { // Bottom
-                     padding = {
-                         padding: {
-                             top: 0,
-                             bottom: 50
-                         }
-                     };
-                     uiPadding = {
-                         padding: {
-                             top: 30,
-                             right: 15,
-                             bottom: 15,
-                             left: 15
-                         }
-                     };
-                 }
-                 app.mapView.set(padding);
-                 app.mapView.ui.set(uiPadding);
-                 // Reset popup
-                 if (app.activeView.popup.visible && app.activeView.popup.dockEnabled) {
-                     app.activeView.popup.visible = false;
-                     app.activeView.popup.visible = true;
-                 }
-             }
-
-         });
+                "calcite-maps/calcitemaps-v0.2",
+                "dojo/domReady!"
+              ], function (
+                  Map,
+                  MapView,
+                  Search,
+                  Popup,
+                  watchUtils,
+                  query,
+                  on,
+                  CSVLayer,
+                  urlUtils,
+                  FeatureLayer,
+                  Draw,
+                  SketchViewModel,
+                  Graphic,
+                  GraphicsLayer,
+                  Legend,
+                  BasemapToggle,
+                  Locate,
+                  RouteTask,
+                  RouteParameters,
+                  FeatureSet,
+                  config,
+                  Directions,
+                  GeometryService,
+                  LengthsParameters,
+                  ServiceAreaTask,
+                  ServiceAreaParameters,
+                  KMLLayer,
+                  ScaleBar,
+                  ServiceAreaSolveResult,
+                  SimpleFillSymbol,
+                  SimpleLineSymbol,
+                  Color
+                ) {
+
+                  var distDriven = document.getElementById("distanceDriven");
+                  var fuelSavings = document.getElementById("fuelSavings");
+                  var cFootprint = document.getElementById("carbonFootprint");
+                  var totalroundtrips = document.getElementById("totalroundtrips");
+                  var price = document.getElementById("price");
+                  var range = document.getElementById("range");
+                  var rangeCharging = document.getElementById("rangeCharging");
+                  var vehicleselectedCharging = document.getElementById("vehicleselectedCharging");
+                  var rangeDriving = document.getElementById("rangeDriving");
+                  var vehicleselectedDriving = document.getElementById("vehicleselectedDriving");
+                  var startPoint;
+
+                  // data from: https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
+                  var vehicleModels = [["fordfocuselectric", 31199, 122, "Ford Focus Electric"],
+                                      ["miEv", 27998, 100, "Mitsubishi i-MiEV"],
+                                      ["nissanleaf", 32698, 135, "Nissan Leaf"],
+                                      ["fortwo", 26990, 109, "Smart fortwo Electric Drive"],
+                                      ["teslamodels", 77700, 286, "Tesla Model S"],
+                                      ["bmwi", 45300, 130, "BMW i3"],
+                                      ["kiasoul", 27998, 100, "KIA Soul EV"],
+                                      ["teslamodelx", 106100, 391, "Tesla Model X"],
+                                      ["chevybolt", 43000, 383, "Chevy Bolt"]];
+                  // default
+                  var currentModel = ["fordfocuselectric", 31199, 122, "Ford Focus Electric"];
+
+                  // Proxy the route requests to avoid prompt for log in
+                  urlUtils.addProxyRule({
+                      urlPrefix: "route.arcgis.com",
+                      proxyUrl: "/proxy/PHP/proxy.php"
+                  });
+
+                  urlUtils.addProxyRule({
+                      urlPrefix: "geometry.arcgis.com",
+                      proxyUrl: "/proxy/PHP/proxy.php"
+                  });
+
+                  urlUtils.addProxyRule({
+                      urlPrefix: "geometryservice.arcgis.com",
+                      proxyUrl: "/proxy/PHP/proxy.php"
+                  });
+                  urlUtils.addProxyRule({
+                      urlPrefix: "lengthsparameters.arcgis.com",
+                      proxyUrl: "/proxy/PHP/proxy.php"
+                  });
+
+                  var routeTask = new RouteTask({
+                      url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+                  });
+                  var geometryService = new GeometryService({
+                      url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer"
+                  });
+
+                  var serviceAreaTask = new ServiceAreaTask({
+                      url: "http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/Network/USA/NAServer/Service Area"
+                  });
+
+                  // The stops and route result will be stored in this layer
+                  var routeLyr = new GraphicsLayer();
+
+                  // Setup the route parameters
+                  var routeParams = new RouteParameters({
+                      stops: new FeatureSet(),
+                      outSpatialReference: { // autocasts as new SpatialReference()
+                          wkid: 3857
+                      }
+                  });
+                  // Define the symbology used to display the stops
+                  var stopSymbol = {
+                      type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                      style: "cross",
+                      size: 15,
+                      outline: { // autocasts as new SimpleLineSymbol()
+                          width: 4
+                      }
+                  };
+
+                  // Define the symbology used to display the route
+                  var routeSymbol = {
+                      type: "simple-line", // autocasts as SimpleLineSymbol()
+                      color: [248, 88, 87, 0.7],
+                      width: 5
+                  };
+
+                  app = {
+                      center: [-123.10043397545394, 49.25567607806475],
+                      scale: 144447,
+                      basemap: "streets-navigation-vector",
+                      viewPadding: {
+                          top: 50,
+                          bottom: 0
+                      },
+                      uiComponents: ["zoom", "compass", "attribution"],
+                      dockOptions: {
+                          position: "auto",
+                          // Custom docking breakpoints
+                          breakpoint: {
+                              width: 768,
+                              height: 768
+                          }
+                      },
+                      mapView: null,
+                      activeView: null,
+                      searchWidget: null,
+                      screenWidth: 0
+                  };
+
+                  /******************************************************************
+                  *
+                  * Create the map view and ui components
+                  * 
+                  ******************************************************************/
+                  // GraphicsLayer to hold graphics created via sketch view model
+                  var tempGraphicsLayer = new GraphicsLayer(); //home
+                  var tempGraphicsLayer2 = new GraphicsLayer(); //dest
+                  var tempGraphicsLayerStartPoint = new GraphicsLayer(); //starting point for driving distance tab
+
+                  // Map
+                  var map = new Map({
+                      basemap: app.basemap,
+                      layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, routeLyr]
+                  });
+                  app.mapView = new MapView({
+                      container: "mapViewDiv",
+                      map: map,
+                      center: app.center,
+                      scale: app.scale,
+                      padding: app.viewPadding,
+                      popup: new Popup({
+                          dockOptions: app.dockOptions
+                      }),
+                      ui: {
+                          components: app.uiComponents
+                      }
+                  });
+
+                  var scalebar = new ScaleBar({
+                      view: app.mapView,
+                      unit: "metric"
+                  });
+
+                  app.mapView.ui.add(scalebar, "bottom-right");
+                  app.mapView.ui.move(["zoom"], "top-left");
+
+                  // Set the active view to scene
+                  app.activeView = app.mapView;
+
+                  // locator widget
+                  var locateBtn = new Locate({
+                      view: app.mapView
+                  });
+
+                  //Add the locate widget to the top left corner of the view
+                  app.mapView.ui.add(locateBtn, {
+                      position: "top-left"
+                  });
+
+                  app.mapView.ui.move(["compass"], "top-left");
+
+                  // Create the search widget and add it to the navbar instead of view
+                  app.searchWidget = new Search({
+                      view: app.activeView
+                  }, "searchWidgetDiv");
+
+                  /* charging station template & add csv layer */
+                  var chargingstationtemplate = { // autocasts as new PopupTemplate()
+                      title: "Charging Station at {ADDRESS}",
+                      content: "<p>Lot operated by {LOT_OPERATOR}</p>",
+                      fieldInfos: [{
+                          fieldName: "ADDRESS",
+                          format: {
+                              digitSeparator: true, // Use a comma separator for large numbers
+                              places: 0 // Sets the number of decimal places to 0 and rounds up
+                          }
+                      }, {
+                          fieldName: "LOT_OPERATOR",
+                          format: {
+                              digitSeparator: true,
+                              places: 0
+                          }
+                      }]
+                  };
+
+                  var csvLayer = new CSVLayer({
+                      url: "data/chargingStations.csv",
+                      popupTemplate: chargingstationtemplate
+                  });
+
+                  csvLayer.renderer = {
+                      type: "simple",
+                      symbol: {
+                          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                          url: "imgs/charging-station.png",
+                          width: "20px",
+                          height: "20px"
+                      }
+                  };
+                  map.add(csvLayer);
+
+                  /*            var cityBound = new KMLLayer({
+                  url: "data/cityboundary.kml"
+                  });
+
+                  cityBound.on("load", function() {  
+                  var layers = layer.getLayers()  
+                  console.log(layers);  
+                  });  
+                  cityBound.renderer = {
+                  type: "simple-line",
+                  color: [248, 88, 87, 0.7],
+                  width: 2
+                  };
+                  map.add(cityBound);*/
+
+
+                  /* service area
+                  var serviceAParams = new ServiceAreaParameters({
+                  defaultBreaks: [5],
+                  //impedanceAttribute: "Length",
+                  outSpatialReference: map.spatialReference,
+                  returnFacilities: true,
+                  outputPolygons: "esriNAServerServiceAreaLayer",
+                  returnPointBarriers: true
+                  });*/
+
+                  var params = new ServiceAreaParameters();
+                  params.defaultBreaks = [1];
+                  params.outSpatialReference = map.spatialReference;
+                  params.returnFacilities = false;
+
+                  var drivingDistBtn = document.getElementById("drivingDistBtn");
+                  drivingDistBtn.onclick = function () {
+                      var features = [];
+                      features.push(startPoint);
+                      var facilities = new FeatureSet();
+                      facilities.features = features;
+                      params.facilities = facilities;
+                      console.log(params);
+                      serviceAreaTask.solve(params).then(serviceResult);
+                  }
+
+                  function serviceResult(result) {
+                      console.log("Solving result");
+                      var polygonSymbol = new SimpleFillSymbol(
+                            "solid",
+                             new SimpleLineSymbol("solid", new Color([232, 104, 80]), 2),
+                             new Color([232, 104, 80, 0.25])
+                      );
+                      console.log("Showing results:");
+                      console.log(result.serviceAreaPolygons);
+                      console.log(result.serviceAreaPolygons.length);
+                      for (var i = 0; i < result.serviceAreaPolygons.length; i++) {
+                          result.serviceAreaPolygons[i].setSymbol(polygonSymbol);
+                          console.log("adding");
+                          tempGraphicsLayerStartPoint.add(serviceArea);
+                      }
+                      console.log("ending");
+                  }
+
+
+
+                  /******* add legend & points ***********/
+                  app.mapView.when(function () {
+
+                      var legend = new Legend({
+                          container: "legendDiv",
+                          view: app.mapView,
+                          layerInfos: [{
+                              layer: csvLayer,
+                              title: "Charging Station"
+                          }/*, {
+                              layer: cityBound,
+                              title: "City Boundary"
+                          }*/
+                          ]
+                      });
+
+                      // create a new sketch view model
+                      var sketchViewModelHome = new SketchViewModel({
+                          view: app.mapView,
+                          layer: tempGraphicsLayer,
+                          pointSymbol: { // symbol used for points
+                              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                              url: "imgs/house.png",
+                              width: "20px",
+                              height: "20px"
+                          }
+                      });
+
+                      var sketchViewModelDest = new SketchViewModel({
+                          view: app.mapView,
+                          layer: tempGraphicsLayer2,
+                          pointSymbol: { // symbol used for points
+                              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                              url: "imgs/map-marker.svg",
+                              width: "15px",
+                              height: "20px"
+                          }
+                      });
+
+                      var sketchViewModelStartPoint = new SketchViewModel({
+                          view: app.mapView,
+                          layer: tempGraphicsLayerStartPoint,
+                          pointSymbol: { // symbol used for points
+                              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                              url: "imgs/flag.svg",
+                              width: "20px",
+                              height: "20px"
+                          }
+                      });
+
+                      function addStop(event) {
+                          // Execute the route task if 2 or more stops are input
+                          routeParams.stops.features.push(event);
+                          if (routeParams.stops.features.length >= 2) {
+                              routeTask.solve(routeParams).then(showRoute);
+                          }
+                      }
+
+                      function measureDistance(geometry) {
+                          var lengthParams = new LengthsParameters();
+                          //console.log(geometry);
+                          lengthParams.polylines = [geometry];
+                          lengthParams.lengthUnit = geometryService.UNIT_METER;
+                          lengthParams.calculationType = 'geodesic';
+                          lengthParams.geodesic = true;
+                          geometryService.lengths(lengthParams).then(outputDistance);
+                      }
+
+                      function outputDistance(result) {
+                          //console.log("Displaying result:");
+                          //console.log(result.lengths.toString());
+
+                          //TODO: Update these when we have real values:
+                          var dist = result.lengths / 1000;
+                          distDriven.innerHTML = (dist).toFixed(2).toString();
+                          fuelSavings.innerHTML = (dist * 500).toFixed(2).toString();
+                          cFootprint.innerHTML = (dist * 5).toFixed(2).toString();
+                          totalroundtrips.innerHTML = Math.round(currentModel[2] / dist).toString();
+                      }
+
+                      var routeResult = [];
+
+                      // Adds the solved route to the map as a graphic
+                      function showRoute(data) {
+                          routeResult = data.routeResults[0].route;
+                          routeResult.symbol = routeSymbol;
+                          routeLyr.add(routeResult);
+                          measureDistance(routeResult.geometry);
+                      }
+
+                      var directions = new Directions({
+                          view: app.mapView
+                      });
+                      function useDirections() {
+                          app.mapView.ui.add(directions, "top-right");
+                      }
+                      function closeDirections() {
+                          app.mapView.ui.remove(directions);
+                          directions.destroy();
+                      }
+
+                      //Clears all routes
+                      function clearRoutes() {
+                          for (var i = routeParams.stops.features.length - 1; i >= 0; i--) {
+                              routeLyr.remove(routeParams.stops.features.splice(i, 1)[0]);
+                          }
+                          routeResult = [];
+                          routeLyr.removeAll();
+                      }
+
+                      // ************************************************************
+                      // Get the completed graphic from the event and add it to view.
+                      // This event fires when user presses
+                      //  * "C" key to finish sketching point, polygon or polyline.
+                      //  * Double-clicks to finish sketching polyline or polygon.
+                      //  * Clicks to finish sketching a point geometry.
+                      // ***********************************************************
+                      var beingSetStatus = 0;
+                      sketchViewModelHome.on("draw-complete", function (evt) {
+                          // add the graphic to the graphics layer
+                          tempGraphicsLayer.add(evt.graphic);
+                          addStop(evt.graphic);
+                          setActiveButton();
+                          beingSetStatus = 0;
+                      });
+                      sketchViewModelDest.on("draw-complete", function (evt) {
+                          // add the graphic to the graphics layer
+                          tempGraphicsLayer2.add(evt.graphic);
+                          addStop(evt.graphic);
+                          setActiveButton();
+                          beingSetStatus = 0;
+                      });
+                      sketchViewModelStartPoint.on("draw-complete", function (evt) {
+                          // add the graphic to the graphics layer
+                          startPoint = evt.graphic;
+                          tempGraphicsLayerStartPoint.add(evt.graphic);
+                          setActiveButton();
+                          beingSetStatus = 0;
+                      });
+                      // *************************************
+                      // activate the sketch to create a home point
+                      // *************************************
+                      var drawHomeButton = document.getElementById("homeButton");
+                      drawHomeButton.onclick = function () {
+                          if (beingSetStatus != 1) {
+                              // set the sketch to create a point geometry
+                              beingSetStatus = 1;
+                              sketchViewModelHome.create("point");
+                              setActiveButton(this);
+                              document.getElementById("homeButton").disabled = true;
+                          }
+                      };
+
+                      // *************************************
+                      // activate the sketch to create a dest point
+                      // *************************************
+                      var drawDestButton = document.getElementById("destButton");
+                      drawDestButton.onclick = function (event) {
+                          if (beingSetStatus != 1) {
+                              // set the sketch to create a point geometry
+                              beingSetStatus = 1;
+                              sketchViewModelDest.create("point");
+                              setActiveButton(this);
+                              document.getElementById("destButton").disabled = true;
+                          }
+                      };
+
+                      // *************************************
+                      // activate the sketch to create a start point
+                      // *************************************
+                      var drawStartMarkerButton = document.getElementById("startMarkerButton");
+                      drawStartMarkerButton.onclick = function () {
+                          if (beingSetStatus != 1) {
+                              // set the sketch to create a point geometry
+                              beingSetStatus = 1;
+                              sketchViewModelStartPoint.create("point");
+                              setActiveButton(this);
+                              document.getElementById("startMarkerButton").disabled = true;
+                          }
+                      };
+
+                      // reset button for driving distance
+
+                      document.getElementById("startMarkerResetButton").onclick = function () {
+                          tempGraphicsLayerStartPoint.removeAll();
+                          sketchViewModelStartPoint.reset();
+                          document.getElementById("startMarkerButton").disabled = false;
+                          setActiveButton();
+                      };
+
+                      // reset button for savings calc
+
+                      document.getElementById("ResetBtn").onclick = function () {
+                          clearSavingsCalcMarkers();
+                      };
+
+                      function clearSavingsCalcMarkers() {
+                          tempGraphicsLayer.removeAll();
+                          sketchViewModelHome.reset();
+                          sketchViewModelDest.reset();
+                          document.getElementById("homeButton").disabled = false;
+                          document.getElementById("destButton").disabled = false;
+                          tempGraphicsLayer2.removeAll();
+                          setActiveButton();
+                          clearRoutes();
+                          distDriven.innerHTML = "0";
+                          fuelSavings.innerHTML = "0";
+                          cFootprint.innerHTML = "0";
+                      }
+
+                      function setActiveButton(selectedButton) {
+                          // focus the view to activate keyboard shortcuts for sketching
+                          app.mapView.focus();
+                          //console.log(selectedButton.id);
+                          var elements = document.getElementsByClassName("active");
+                          for (var i = 2; i < elements.length; i++) {
+                              // skip the first element because it'll remove the active class from our side panel nav
+                              //console.log(elements[i].id)
+                              elements[i].classList.remove("active");
+                          }
+                          if (selectedButton) {
+                              selectedButton.classList.add("active");
+                          }
+                      }
+                  });
+
+
+                  /******************************************************************
+                  *
+                  * Synchronize the view, search and popup
+                  * 
+                  ******************************************************************/
+
+                  // Tab - toggle between map and scene view
+                  query(".calcite-navbar li a[data-toggle='tab']").on("click", function (
+                  e) {
+                      syncTabs(e);
+
+                      syncViews(app.mapView);
+                      app.activeView = app.mapView;
+
+                      syncSearch();
+                  });
+
+                  // Tabs - sync ui menus
+                  function syncTabs(e) {
+                      query(".calcite-navbar li.active").removeClass("active");
+                      query(e.target).addClass("active");
+                  }
+
+                  // Views - sync viewpoint and popup
+                  function syncViews(fromView, toView) {
+                      watchUtils.whenTrueOnce(toView, "ready").then(function (result) {
+                          watchUtils.whenTrueOnce(toView, "stationary").then(function (
+                      result) {
+                              toView.goTo(fromView.viewpoint);
+                              toView.popup.reposition();
+                          });
+                      });
+                  }
+
+                  // Search - sync search location and popup
+                  function syncSearch() {
+                      app.searchWidget.view = app.activeView;
+                      if (app.searchWidget.selectedResult) {
+                          app.searchWidget.search(app.searchWidget.selectedResult.name);
+                          app.activeView.popup.reposition();
+                      }
+                  }
+
+                  /******************************************************************
+                  *
+                  * Show and hide the panels and popup
+                  * 
+                  ******************************************************************/
+
+                  // Views - Listen to view size changes to show/hide panels
+                  app.mapView.watch("size", viewSizeChange);
+
+                  function viewSizeChange(screenSize) {
+                      if (app.screenWidth !== screenSize[0]) {
+                          app.screenWidth = screenSize[0];
+                          setPanelVisibility();
+                      }
+                  }
+
+                  // Popups - Listen to popup changes to show/hide panels
+                  app.mapView.popup.watch(["visible", "currentDockPosition"],
+                  setPanelVisibility);
+
+                  // Panels - Show/hide the panel when popup is docked
+                  function setPanelVisibility() {
+                      var isMobileScreen = app.activeView.widthBreakpoint === "xsmall" ||
+                    app.activeView.widthBreakpoint ===
+                    "small",
+                    isDockedVisible = app.activeView.popup.visible && app.activeView.popup
+                    .currentDockPosition,
+                    isDockedBottom = app.activeView.popup.currentDockPosition && app.activeView
+                    .popup.currentDockPosition
+                    .indexOf("bottom") > -1,
+                    isDockedTop = app.activeView.popup.currentDockPosition && app.activeView
+                    .popup.currentDockPosition
+                    .indexOf("top") > -1;
+                      // Mobile (xsmall/small)
+                      if (isMobileScreen) {
+                          if (isDockedVisible && isDockedBottom) {
+                              query(".calcite-panels").addClass("invisible");
+                          } else {
+                              query(".calcite-panels").removeClass("invisible");
+                          }
+                      } else { // Desktop (medium+)
+                          if (isDockedVisible && isDockedTop) {
+                              query(".calcite-panels").addClass("invisible");
+                          } else {
+                              query(".calcite-panels").removeClass("invisible");
+                          }
+                      }
+                  }
+
+                  // Panels - Dock popup when panels show (desktop or mobile)
+                  query(".calcite-panels .panel").on("show.bs.collapse", function (e) {
+                      if (app.activeView.popup.currentDockPosition || app.activeView.widthBreakpoint ===
+                    "xsmall") {
+                          app.activeView.popup.dockEnabled = false;
+                      }
+                  });
+
+                  // Panels - Undock popup when panels hide (mobile only)
+                  query(".calcite-panels .panel").on("hide.bs.collapse", function (e) {
+                      if (app.activeView.widthBreakpoint === "xsmall") {
+                          app.activeView.popup.dockEnabled = true;
+                      }
+                  });
+
+                  // Popup
+                  query(".esri-popup__header-title").on("click", function (e) {
+                      query(".esri-popup__main-container").toggleClass(
+                    "esri-popup-collapsed");
+                      app.activeView.popup.reposition();
+                  } .bind(this));
+
+                  /******************************************************************
+                  *
+                  * Apply Calcite Maps CSS classes to change application on the fly
+                  *
+                  * For more information about the CSS styles or Sass build visit:
+                  * http://github.com/esri/calcite-maps
+                  * 
+                  ******************************************************************/
+
+                  var cssSelectorUI = ".calcite-navbar, .calcite-panels",
+                  cssSelectorMap = ".calcite-map";
+
+
+                  // Basemap events
+                  query("#selectBasemapPanel").on("change", function (e) {
+                      app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
+                    .dataset.vector;
+                  });
+
+
+                  // Change vehicle model event
+                  query("#selectVehicleModel").on("change", function (e) {
+                      var newModel = e.target.options[e.target.selectedIndex].value;
+                      for (var i = 0; i < vehicleModels.length; i++) {
+                          if (vehicleModels[i][0] === newModel) {
+                              currentModel = vehicleModels[i];
+                              //console.log(currentModel);
+                              price.innerHTML = currentModel[1].toLocaleString().toString();
+                              range.innerHTML = currentModel[2].toLocaleString().toString();
+                              rangeCharging.innerHTML = currentModel[2].toLocaleString().toString();
+                              vehicleselectedCharging.innerHTML = currentModel[3].toString();
+                              rangeDriving.innerHTML = currentModel[2].toLocaleString().toString();
+                              vehicleselectedDriving.innerHTML = currentModel[3].toString();
+                              break;
+                          }
+                      }
+                  });
+
+                  // Set view padding for widgets based on navbar position
+                  function setViewPadding(layout) {
+                      var padding, uiPadding;
+                      // Top
+                      if (layout === "calcite-nav-top") {
+                          padding = {
+                              padding: {
+                                  top: 50,
+                                  bottom: 0
+                              }
+                          };
+                          uiPadding = {
+                              padding: {
+                                  top: 15,
+                                  right: 15,
+                                  bottom: 30,
+                                  left: 15
+                              }
+                          };
+                      } else { // Bottom
+                          padding = {
+                              padding: {
+                                  top: 0,
+                                  bottom: 50
+                              }
+                          };
+                          uiPadding = {
+                              padding: {
+                                  top: 30,
+                                  right: 15,
+                                  bottom: 15,
+                                  left: 15
+                              }
+                          };
+                      }
+                      app.mapView.set(padding);
+                      app.mapView.ui.set(uiPadding);
+                      // Reset popup
+                      if (app.activeView.popup.visible && app.activeView.popup.dockEnabled) {
+                          app.activeView.popup.visible = false;
+                          app.activeView.popup.visible = true;
+                      }
+                  }
+
+              });
   </script>
 
 </body>
