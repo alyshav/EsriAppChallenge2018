@@ -1,5 +1,5 @@
 # GoElectric by mapit.space
-### Submission for the 2018 Esri App Challenge
+### Submission for the 2018 Esri App Challenge by Alysha, Anthony, and Chris from Simon Fraser University
 
 ## Mission Statement
 GoElectric by mapit.space (mapit dot space) is a suite of tools allowing Vancouverites to observe the benefits
