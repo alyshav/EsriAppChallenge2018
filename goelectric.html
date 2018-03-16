@@ -219,13 +219,17 @@
                 <button class="action-button glyphicon glyphicon-trash" id="startMarkerResetButton" type="button" title="Clear Starting Point"></button>        
             </div>
             <div class="calculate">
-                <button id="drivingDistBtn" class="btn btn-primary btn-small"> Find Possible Routes</button>
+                <button id="drivingDistBtn" class="btn btn-primary btn-small"> Find Driving Distance</button>
+                <div class="drawicons">
+                    <br />
+                  <b>Status: </b><span id="processingText">Waiting for inputs.</span>
+                </div>
             </div>
         </div>
-        <div class="well greenwell">
+        <!--<div class="well greenwell">
             <div class="subtext">Possible Routes</div>
             <span class="totalsavingsvalue">4132132</span>
-        </div>
+        </div>-->
       </div>
     <!-- / DRIVING RADIUS PANEL -->
 
@@ -420,6 +424,7 @@
                   var vehicleselectedCharging = document.getElementById("vehicleselectedCharging");
                   var rangeDriving = document.getElementById("rangeDriving");
                   var vehicleselectedDriving = document.getElementById("vehicleselectedDriving");
+                  var processingText = document.getElementById("processingText");
                   var startPoint;
 
                   // data from: https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
@@ -635,21 +640,27 @@
                   returnPointBarriers: true
                   });*/
 
-                  var params = new ServiceAreaParameters();
-                  params.defaultBreaks = [10];
-                  params.outSpatialReference = map.spatialReference;
-                  params.returnFacilities = false;
-                  //params.impedanceAttribute = "Length";
-
                   var drivingDistBtn = document.getElementById("drivingDistBtn");
                   drivingDistBtn.onclick = function () {
-                      var features = [];
-                      features.push(startPoint);
-                      var facilities = new FeatureSet();
-                      facilities.features = features;
-                      params.facilities = facilities;
-                      console.log(params);
-                      serviceAreaTask.solve(params).then(serviceResult);
+                      serviceAreaComputation();
+                  }
+
+                  function serviceAreaComputation() {
+                      if (startPoint != null) {
+                          console.log("Starting service area computation.");
+                          var params = new ServiceAreaParameters();
+                          params.defaultBreaks = [currentModel[2]];
+                          params.outSpatialReference = map.spatialReference;
+                          params.returnFacilities = false;
+                          //params.impedanceAttribute = "Length";
+                          var features = [];
+                          features.push(startPoint);
+                          var facilities = new FeatureSet();
+                          facilities.features = features;
+                          params.facilities = facilities;
+                          processingText.innerHTML = "Processing...";
+                          serviceAreaTask.solve(params).then(serviceResult);
+                      }
                   }
 
                   function serviceResult(result) {
@@ -659,18 +670,16 @@
                              new SimpleLineSymbol("solid", new Color([232, 104, 80]), 2),
                              new Color([232, 104, 80, 0.25])
                       );
-                      console.log("Showing results:");
                       console.log(result.serviceAreaPolygons);
                       console.log(result.serviceAreaPolygons.length);
                       for (var i = 0; i < result.serviceAreaPolygons.length; i++) {
-                          console.log("adding");
                           console.log(result.serviceAreaPolygons[i].geometry.type);
                           console.log(result.serviceAreaPolygons[i].symbol);
                           result.serviceAreaPolygons[i].symbol = polygonSymbol;
-                          //result.serviceAreaPolygons[i].setAttribute("symbol", polygonSymbol);                          
                           tempGraphicsLayerStartPoint.add(result.serviceAreaPolygons[i]);
-                          console.log("ending");
                       }
+                      processingText.innerHTML = "Complete!";
+                      zoomToLayer(tempGraphicsLayerStartPoint);
                   }
 
 
@@ -859,11 +868,44 @@
                       // reset button for driving distance
 
                       document.getElementById("startMarkerResetButton").onclick = function () {
+                          clearStartMarker();
+                      };
+
+                      function clearStartMarker() {
+                          processingText.innerHTML = "Waiting for inputs.";
                           tempGraphicsLayerStartPoint.removeAll();
                           sketchViewModelStartPoint.reset();
                           document.getElementById("startMarkerButton").disabled = false;
                           setActiveButton();
-                      };
+                          startPoint = null;
+                      }
+
+                      // Change vehicle model event
+                      query("#selectVehicleModel").on("change", function (e) {
+                          var newModel = e.target.options[e.target.selectedIndex].value;
+                          for (var i = 0; i < vehicleModels.length; i++) {
+                              if (vehicleModels[i][0] === newModel) {
+                                  currentModel = vehicleModels[i];
+                                  //console.log(currentModel);
+                                  price.innerHTML = currentModel[1].toLocaleString().toString();
+                                  range.innerHTML = currentModel[2].toLocaleString().toString();
+                                  rangeCharging.innerHTML = currentModel[2].toLocaleString().toString();
+                                  vehicleselectedCharging.innerHTML = currentModel[3].toString();
+                                  rangeDriving.innerHTML = currentModel[2].toLocaleString().toString();
+                                  vehicleselectedDriving.innerHTML = currentModel[3].toString();
+                                  break;
+                              }
+                          }
+                          clearStartMarker();
+                      });
+
+                      function zoomToLayer(layer) {
+                          return layer.queryExtent()
+                          .then(function (response) {
+                              app.mapView.goTo(response.extent);
+                          });
+                      }
+
 
                       // reset button for savings calc
 
@@ -883,6 +925,7 @@
                           distDriven.innerHTML = "0";
                           fuelSavings.innerHTML = "0";
                           cFootprint.innerHTML = "0";
+                          totalroundtrips.innerHTML = "0";
                       }
 
                       function setActiveButton(selectedButton) {
@@ -1033,25 +1076,6 @@
                   query("#selectBasemapPanel").on("change", function (e) {
                       app.mapView.map.basemap = e.target.options[e.target.selectedIndex]
                     .dataset.vector;
-                  });
-
-
-                  // Change vehicle model event
-                  query("#selectVehicleModel").on("change", function (e) {
-                      var newModel = e.target.options[e.target.selectedIndex].value;
-                      for (var i = 0; i < vehicleModels.length; i++) {
-                          if (vehicleModels[i][0] === newModel) {
-                              currentModel = vehicleModels[i];
-                              //console.log(currentModel);
-                              price.innerHTML = currentModel[1].toLocaleString().toString();
-                              range.innerHTML = currentModel[2].toLocaleString().toString();
-                              rangeCharging.innerHTML = currentModel[2].toLocaleString().toString();
-                              vehicleselectedCharging.innerHTML = currentModel[3].toString();
-                              rangeDriving.innerHTML = currentModel[2].toLocaleString().toString();
-                              vehicleselectedDriving.innerHTML = currentModel[3].toString();
-                              break;
-                          }
-                      }
                   });
 
                   // Set view padding for widgets based on navbar position
