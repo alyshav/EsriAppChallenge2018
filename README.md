@@ -24,11 +24,14 @@ of owning an electric car and perform network analyses to find optimal charging 
 " target="_blank"><img src="imgs/go-electric.png" 
 alt="Video" width="240" height="180" border="10" /></a>
 
-## Open data sources used
+## Data sources used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
+* https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
 
 ## References
-* https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
+* https://www.bchydro.com/powersmart/electric-vehicles/charging/charging-at-home.html
+* https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/geography.html
+* https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle.html
 
 ## Free Assets used
 * Font Awesome icons: https://fontawesome.com/
