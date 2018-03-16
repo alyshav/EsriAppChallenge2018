@@ -426,6 +426,7 @@
                   var vehicleselectedDriving = document.getElementById("vehicleselectedDriving");
                   var processingText = document.getElementById("processingText");
                   var startPoint;
+                  var currentResult;
 
                   // data from: https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
                   var vehicleModels = [["fordfocuselectric", 31199, 122, "Ford Focus Electric"],
@@ -755,7 +756,7 @@
                       function outputDistance(result) {
                           //console.log("Displaying result:");
                           //console.log(result.lengths.toString());
-
+                          currentResult = result;
                           //TODO: Update these when we have real values:
                           var dist = result.lengths / 1000;
                           distDriven.innerHTML = (dist).toFixed(2).toString();
@@ -896,6 +897,9 @@
                                   break;
                               }
                           }
+                          if (currentResult != null) {
+                              outputDistance(currentResult);
+                          }
                           clearStartMarker();
                       });
 
@@ -926,6 +930,7 @@
                           fuelSavings.innerHTML = "0";
                           cFootprint.innerHTML = "0";
                           totalroundtrips.innerHTML = "0";
+                          currentResult = null;
                       }
 
                       function setActiveButton(selectedButton) {
