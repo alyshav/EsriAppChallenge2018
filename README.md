@@ -1,4 +1,4 @@
-# GoElectric by mapit.space
+# goElectric by mapit.space
 ### Submission for the 2018 Esri App Challenge by Alysha, Anthony, and Chris from Simon Fraser University
 
 ## Quick Start
@@ -36,9 +36,13 @@ The Average Electricity Economy (AEE) values for each of our chosen vehicles wer
 Approximate Annual Cost (AAC) = 2 x d x nt x AEE x CEBC x 52
 
 d = Distance, as specified by end-user based on the locations of their start and end placements. This was multiplied by 2 to indicate a round trip
+
 nt = number of trips per, value to be specified by end-user
+
 AEE = Average Electricity Economy, each vehicle has their respective AEE value, will be chosen based on the vehicle chosen from the drop-down list
+
 CEBC = Cost of Electricity in BC at Step 2 ($0.1287/kWh), which is the highest rate that BC Hydro can charge its customers per hour
+
 52 = this value represents how many weeks there are in a year, it was chosen to make the whole equation representative of annual costs
 
 ### Approximate CO2 Emissions Not Emitted
@@ -47,7 +51,9 @@ The EPA reported that the average gasoline-using vehicle typically emits about 4
 Approximate CO2 Emissions Not Emitted = 2 x d x nt x 0.25538 kg/km x 52
 
 d = Distance, as specified by end-user based on the locations of their start and end placements. This was multiplied by 2 to indicate a round trip
+
 nt = number of trips per, value to be specified by end-user
+
 52 = this value represents how many weeks there are in a year, it was chosen to make the whole equation representative of annual costs
 
 ### Average Fuel (Gasoline) Costs in Vancouver (2018)
@@ -56,7 +62,9 @@ We also want to compare how much you save annually by using an electric vehicle 
 Average Fuel (Gasoline) Costs in Vancouver (2018) = 2 x d x nt x $0.155696/km x 52
 
 d = Distance, as specified by end-user based on the locations of their start and end placements. This was multiplied by 2 to indicate a round trip
+
 nt = number of trips per, value to be specified by end-user
+
 52 = this value represents how many weeks there are in a year, it was chosen to make the whole equation representative of annual costs
 
 ### Limitations
