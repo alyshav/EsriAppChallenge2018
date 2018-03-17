@@ -24,6 +24,12 @@ of owning an electric car and perform network analyses to find optimal charging 
 " target="_blank"><img src="imgs/go-electric.png" 
 alt="Video" width="240" height="100" border="10" /></a>
 
+## Team
+* Anthony Lee: Lead Researcher, Found EV information.
+* Alysha van Duynhoven: Lead Developer, Developed the GoElectric web application, conducted research.
+* Chris Yee: Project Lead & Designer, Created the GoElectric UI design, logos, and home page, conducted research. Video editor extraordinaire.
+
+
 ## Data sources used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
 * City Municipal Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm

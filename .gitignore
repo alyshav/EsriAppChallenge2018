@@ -1,2 +1,6 @@
 proxy/PHP/proxy.sqlite
 proxy/PHP/proxy_log_xml.log
+*.zip
+proxy/PHP/proxy.sqlite
+proxy/PHP/proxy_log_xml.log
+*.sqlite
