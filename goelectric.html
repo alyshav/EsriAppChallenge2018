@@ -75,10 +75,9 @@
         </div>
         <div class="well redwell">
             The Savings Calculator provide approximations based on round-trips between your home and destination.
-        </div>
+        </div>        
         <div class="well bluewell drawpanel">                          
             <div class="wellheading">Select Electric Vehicle Model*</div>
-            <br/>
              <select id="selectVehicleModel" class="form-control">
                 <option value="fordfocuselectric">Ford Focus Electric</option>
                 <option value="miEv">Mitsubishi i-MiEV</option>
@@ -104,23 +103,16 @@
             <div class="notetext"><i>*EV data is from <a href="https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html" target="_blank">Electric vehicles available in BC</a> and the <a href="https://www.caa.ca/carcosts/" target="_blank">CAA Driving Costs Calculator</a></i></div>
         </div>
         <div class="well bluewell drawpanel">
-            <div class="wellheading">Set Home and Destination Markers</div><br/>       
-            <div>
-                Set Home Marker
-                <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>
-                <br/>                                 
-                Set Destination Marker
-                <button class="action-button glyphicon glyphicon-map-marker" id="destButton" type="button" title="Set Destination"></button>
-                <br/>
-                Clear Markers            
-                <button class="action-button glyphicon glyphicon-trash" id="ResetBtn" type="button" title="Clear Markers"></button>        
-            </div>   
+            <div class="wellheading">Set Home and Destination Markers</div>                     
+            <button class="action-button glyphicon glyphicon-home" id="homeButton" type="button" title="Set Home"></button>&nbsp;Set Home Marker
+            <br/>                                                 
+            <button class="action-button glyphicon glyphicon-map-marker" id="destButton" type="button" title="Set Destination"></button>&nbsp;Set Destination Marker
+            <br/>                            
+            <button class="action-button glyphicon glyphicon-trash" id="ResetBtn" type="button" title="Clear Markers"></button>&nbsp;Clear Markers
         </div>
         <div class="well bluewell drawpanel">
-            <div class="wellheading">Round-Trips Per Week</div><br/>           
-            <div class="setlocation">
-                <input id="tripFrequency" type="number" min="1" placeholder="e.g. 5">
-            </div>
+            <span class="wellheading">Round-Trips Per Week</span>
+            <input id="tripFrequency" type="number" min="1" placeholder="e.g. 5">
         </div>
         <div class="well greenwell">
             <div class="subtext">Total Round-Trip Distance Driven Per Year</div>
@@ -145,12 +137,11 @@
         </div>
         <div class="well redwell">
             When you're out and about, this tool allows you to find nearby charging stations to top up.
-            After planning your route, you can find out charging stations within a specified proximity to your route!
+            After <b>planning your route</b>, you can find out charging stations within a specified proximity to your route!
         </div>
         <div class="well bluewell">
             <div class="wellheading">Current Electric Vehicle Selected*</div>
             <div class="drawicons">
-                <br/>
                 <span id="vehicleselectedCharging" class="vehicleselection">Ford Focus Electric</span>
                 <br/>
                 <b>Vehicle Range: <span id="rangeCharging">122</span>km</b>
@@ -167,7 +158,6 @@
         <div class="well bluewell">
             <div class="wellheading">Compute Buffers Around Routes</div>  
             <div class="drawicons">
-                <br/>
                 <div class="slidecontainer">
                     <p>Buffer Range</p>
                     <b><span id="bufferRangeText">500</span> meters</b>
@@ -200,7 +190,6 @@
         <div class="well bluewell">
             <div class="wellheading">Current Electric Vehicle Selected*</div>
             <div class="drawicons">
-                <br/>
                 <span id="vehicleselectedDriving" class="vehicleselection">Ford Focus Electric</span>
                 <br/>
                 <b>Vehicle Range: <span id="rangeDriving">122</span>km</b>
@@ -208,10 +197,17 @@
             </div>         
             <div class="notetext"><i>*Change your vehicle selection in the <b>Savings</b> tab.</i></div>
         </div>
-        <div class="well bluewell">
-            <div class="wellheading">Set Battery State</div>  
+        <div class="well bluewell drawpanel">
+            <div class="wellheading">1) Set Starting Point</div>          
             <div class="drawicons">
-                <br/>
+                Add Marker
+                <button class="action-button glyphicon glyphicon-flag" id="startMarkerButton" type="button" title="Set Starting Point"></button>              
+                <button class="action-button glyphicon glyphicon-trash" id="startMarkerResetButton" type="button" title="Clear Starting Point"></button>        
+            </div>
+        </div>
+        <div class="well bluewell">
+            <div class="wellheading">2) Set Battery State</div>  
+            <div class="drawicons">
                 <div class="slidecontainer">
                     <p>State of Charge</p>
                     <img src="imgs/battery-three-quarters.svg" style="margin-top: -4px; height: 22px; width: 20px;" alt ="battery-state"/>
@@ -222,11 +218,9 @@
             </div>
         </div>
         <div class="well bluewell drawpanel">
-            <div class="wellheading">Set Starting Point</div><br/>           
+            <div class="wellheading">Compute</div>          
             <div class="drawicons">
-                Add Marker
-                <button class="action-button glyphicon glyphicon-flag" id="startMarkerButton" type="button" title="Set Starting Point"></button>              
-                <button class="action-button glyphicon glyphicon-trash" id="startMarkerResetButton" type="button" title="Clear Starting Point"></button>        
+                 Caution: this may take a while!        
             </div>
             <div class="calculate">
                 <button id="drivingDistBtn" class="btn btn-primary btn-small"> Calculate Driving Distance</button>
@@ -274,16 +268,16 @@
             <div class="titlewell">Help</div>
         </div>
         <div class="well redwell">
-            <div class="wellheading">How to use GoElectric</div><br/>
+            <div class="wellheading">How to use GoElectric</div>
             <p>
-                The <b>Savings</b> tab shows values computed based on the EV you select and the route you specify. Using the route distance and the number of round-trips you make, the average electricity economy can be computed.
+                1) The <b>Savings</b> tab shows values computed based on the EV you select and the route you specify. Using the route distance and the number of round-trips you make, the average electricity economy can be computed.
                 The estimated annual CO<sub>2</sub> Emission is also provided for each Electric Vehicle (EV).
             </p>
             <p>
-                The <b>Charging</b> tab shows nearby charging stations. Set a location marker and click "Find Charging Stations."
+                2) The <b>Charging</b> tab shows nearby charging stations. Set a location marker and click "Find Charging Stations."
             </p>
             <p>
-                The <b>EV Range</b> tab shows the radial distance you can drive from a set point with a user-specified battery state. Adjust the battery state, set a location marker and click "Calculate Driving Distance" to get started!
+                3) The <b>EV Range</b> tab shows the radial distance you can drive from a set point with a user-specified battery state. Adjust the battery state, set a location marker and click "Calculate Driving Distance" to get started!
             </p>
             <p>
                 <b>Charging Stations</b> are available throughout Vancouver. 
