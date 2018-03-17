@@ -16,7 +16,8 @@ of owning an electric car and perform network analyses to find optimal charging 
 
 
 ## Calculations
-
+distance * average electricity economy
+so AB distance X this value X number of trips per week X 52 = total power cost per year
 
 ## Video Submission
 
@@ -29,7 +30,7 @@ alt="Video" width="240" height="100" border="10" /></a>
 * Alysha van Duynhoven: Lead Developer, Developed the GoElectric web application, conducted research.
 * Chris Yee: Project Lead & Designer, Created the GoElectric UI design, logos, and home page, conducted research. Video editor extraordinaire.
 
-## Data sources used
+## Data used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
 * City Municipal Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
@@ -40,6 +41,10 @@ alt="Video" width="240" height="100" border="10" /></a>
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle.html
 * http://www.driveelectricmn.org/charging/
 * https://www.caa.ca/electric-vehicles/
+* http://www.autotrader.ca/newsfeatures/20170302/how-much-does-it-really-cost-to-charge-that-electric-vehicle/
+* http://www.cbc.ca/news/canada/british-columbia/electric-car-drivers-fees-charge-stations-1.4178795
+* https://www.caa.ca/carcosts/
+* http://www.nextgreencar.com/
 
 ## Free Assets used
 * Font Awesome icons: https://fontawesome.com/
