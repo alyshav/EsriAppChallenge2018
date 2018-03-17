@@ -41,7 +41,6 @@
         </div>
         <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
         <li><a role="button" href="goelectric.html" aria-haspopup="true"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Explore</a></li>
-      </li>
     </ul>
   </nav>
   <!--/.calcite-navbar -->
@@ -209,7 +208,9 @@
                 <br/>
                 <div class="slidecontainer">
                     <p>State of Charge</p>
+                    <img src="imgs/battery-three-quarters.svg" style="margin-top: -4px; height: 22px; width: 20px;" alt ="battery-state"/>
                     <b><span id="batteryStateText">50</span>%</b>
+                    <br/><br/>
                     <input type="range" min="0" max="1" value="0.5" step="0.05" class="slider" id="batteryState">
                 </div>
             </div>
@@ -642,7 +643,7 @@
                   }
 
                   function serviceAreaComputation() {
-                      if (startPoint != null) {
+                      if (startPoint != null && parseFloat(batteryState.value)!= 0) {
                           console.log("Starting service area computation.");
                           var params = new ServiceAreaParameters();
                           console.log(currentModel[2] * parseFloat(batteryState.value));

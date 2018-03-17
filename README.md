@@ -29,7 +29,6 @@ alt="Video" width="240" height="100" border="10" /></a>
 * Alysha van Duynhoven: Lead Developer, Developed the GoElectric web application, conducted research.
 * Chris Yee: Project Lead & Designer, Created the GoElectric UI design, logos, and home page, conducted research. Video editor extraordinaire.
 
-
 ## Data sources used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
 * City Municipal Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm
@@ -46,3 +45,4 @@ alt="Video" width="240" height="100" border="10" /></a>
 * Font Awesome icons: https://fontawesome.com/
 * https://use.fontawesome.com/releases/v5.0.8/svgs/solid/map-marker-alt.svg
 * https://fontawesome.com/icons/flag?style=solid
+* https://fontawesome.com/icons/battery-three-quarters?style=solid
