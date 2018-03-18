@@ -389,7 +389,7 @@
                       "esri/tasks/support/ClosestFacilityParameters",
                       "esri/request",
                       "esri/tasks/support/BufferParameters",
-
+                      "esri/geometry/geometryEngine",
       // Bootstrap
                       "bootstrap/Collapse",
                       "bootstrap/Dropdown",
@@ -435,7 +435,8 @@
                         ClosestFacilityTask,
                         ClosestFacilityParameters,
                         request,
-                        BufferParameters
+                        BufferParameters,
+                        geometryEngine
                       ) {
 
                         var distDriven = document.getElementById("distanceDriven");
@@ -514,13 +515,15 @@
                             url: "https://route.arcgis.com/arcgis/rest/services/World/ServiceAreas/NAServer/ServiceArea_World"
                         });
 
+                        var cityurl = "https://services1.arcgis.com/xqudh3c5Pv6T9geW/ArcGIS/rest/services/Vancouver_City_Boundary/FeatureServer";
+                        config.request.corsEnabledServers.push(cityurl);
 
-                        //var boundaries = new MapImageLayer({
-                        //    url: "https://services1.arcgis.com/xqudh3c5Pv6T9geW/ArcGIS/rest/services/Vancouver_City_Boundary/FeatureServer",                      
-                        //    sublayers: [{
-                        //      id: 0
-                        //    }]
-                        //});
+                        var boundaries = new FeatureLayer({
+                            url: cityurl,                      
+                            sublayers: [{
+                              id: 0
+                            }]
+                        });
 
                         // The stops and route result will be stored in this layer
                         var routeLyr = new GraphicsLayer();
@@ -584,14 +587,10 @@
                         var tempGraphicsLayerDrivingExtent = new GraphicsLayer(); //starting point for driving distance tab
                         var bufferGraphicsLayer = new GraphicsLayer();
 
-                        //var cityBound = new KMLLayer({
-                        //    url: "data/city_boundary.kmz"
-                        //});
-
                         // Map
                         var map = new Map({
                             basemap: app.basemap,
-                            layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, tempGraphicsLayerDrivingExtent, bufferGraphicsLayer, routeLyr] //boundaries
+                            layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, tempGraphicsLayerDrivingExtent, bufferGraphicsLayer, routeLyr, boundaries] //boundaries
                         });
                         app.mapView = new MapView({
                             container: "mapViewDiv",
@@ -737,10 +736,10 @@
                                 layerInfos: [{
                                     layer: csvLayer,
                                     title: "Charging Station"
-                                }/*, {
-                                    layer: cityBound,
+                                }, {
+                                    layer: boundaries,
                                     title: "City Boundary"
-                                }*/
+                                }
                                 ]
                             });
 
@@ -823,7 +822,7 @@
                                     geometry: results[0],
                                     symbol: polySym
                                 }));
-                                //console.log("csvLayer");
+                                //console.log(csvLayer);
                                 //geometryService.intersect([results[0]], csvLayer).then(intersectResults);
                             }
 
