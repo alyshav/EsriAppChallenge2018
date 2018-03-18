@@ -107,3 +107,5 @@ alt="Video" width="240" height="100" border="10" /></a>
 ## Free Assets used
 * Font Awesome icons: https://fontawesome.com/
 * Circuit background: http://nadyn.biz/circuit-board-backgrounds-56-wallpapers/
+
+Other icons and branding were created by Chris Yee.
