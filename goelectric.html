@@ -373,23 +373,26 @@
                       "esri/tasks/support/RouteParameters",
                       "esri/tasks/support/FeatureSet",
                       "esri/config",
-                      "esri/widgets/Directions",
+                      //"esri/widgets/Directions",
                       "esri/tasks/GeometryService",
                       "esri/tasks/support/LengthsParameters",
                       "esri/tasks/ServiceAreaTask",
                       "esri/tasks/support/ServiceAreaParameters",
-                      "esri/layers/KMLLayer",
+                      //"esri/layers/KMLLayer",
                       "esri/widgets/ScaleBar",
                       "esri/tasks/support/ServiceAreaSolveResult",
                       "esri/symbols/SimpleFillSymbol",
                       "esri/symbols/SimpleLineSymbol",
                       "esri/Color",
-                      "esri/layers/MapImageLayer",
+                      //"esri/layers/MapImageLayer",
                       "esri/tasks/ClosestFacilityTask",
                       "esri/tasks/support/ClosestFacilityParameters",
                       "esri/request",
                       "esri/tasks/support/BufferParameters",
-                      "esri/geometry/geometryEngine",
+                      //"esri/geometry/geometryEngine",
+                      //"esri/tasks/QueryTask",
+                      //"esri/tasks/support/Query",
+
       // Bootstrap
                       "bootstrap/Collapse",
                       "bootstrap/Dropdown",
@@ -420,23 +423,25 @@
                         RouteParameters,
                         FeatureSet,
                         config,
-                        Directions,
+                        //Directions,
                         GeometryService,
                         LengthsParameters,
                         ServiceAreaTask,
                         ServiceAreaParameters,
-                        KMLLayer,
+                        //KMLLayer,
                         ScaleBar,
                         ServiceAreaSolveResult,
                         SimpleFillSymbol,
                         SimpleLineSymbol,
                         Color,
-                        MapImageLayer,
+                        //MapImageLayer,
                         ClosestFacilityTask,
                         ClosestFacilityParameters,
                         request,
-                        BufferParameters,
-                        geometryEngine
+                        BufferParameters
+                        //geometryEngine,
+                        //QueryTask,
+                        //Query
                       ) {
 
                         var distDriven = document.getElementById("distanceDriven");
@@ -453,7 +458,7 @@
                         var vehicleselectedDriving = document.getElementById("vehicleselectedDriving");
                         var processingText = document.getElementById("processingText");
                         var tripFrequency = document.getElementById("tripFrequency");
-                        var tripFreq = 1;
+                        var tripFreq = 5;
                         var startPoint;
                         var currentResult;
                         var bufferRange = document.getElementById("bufferRange");
@@ -466,7 +471,7 @@
                         var gasCostPerKm = 0.155696; //$/km
                         var aac = document.getElementById("aac");
 
-                        tripFrequency.value = 1;
+                        tripFrequency.value = 5;
 
                         var batteryState = document.getElementById("batteryState");
                         var batteryStateText = document.getElementById("batteryStateText");
@@ -519,9 +524,9 @@
                         config.request.corsEnabledServers.push(cityurl);
 
                         var boundaries = new FeatureLayer({
-                            url: cityurl,                      
+                            url: cityurl,
                             sublayers: [{
-                              id: 0
+                                id: 0
                             }]
                         });
 
@@ -590,7 +595,7 @@
                         // Map
                         var map = new Map({
                             basemap: app.basemap,
-                            layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, tempGraphicsLayerDrivingExtent, bufferGraphicsLayer, routeLyr, boundaries] //boundaries
+                            layers: [tempGraphicsLayer, tempGraphicsLayer2, tempGraphicsLayerStartPoint, tempGraphicsLayerDrivingExtent, bufferGraphicsLayer, routeLyr, boundaries] //chargingstns
                         });
                         app.mapView = new MapView({
                             container: "mapViewDiv",
@@ -809,6 +814,16 @@
                                 console.log(results);
                             }
 
+                            //var queryStns = new QueryTask({
+                            //    source: csvLayer
+                            //});
+                            //var query = new Query();
+
+                            //function queryResult(result) {
+                            //    console.log("query result");
+                            //    console.log(result);
+                            //}
+
                             function bufferResults(results) {
                                 var polySym = {
                                     type: "simple-fill", // autocasts as new SimpleFillSymbol()
@@ -822,7 +837,16 @@
                                     geometry: results[0],
                                     symbol: polySym
                                 }));
-                                //console.log(csvLayer);
+
+                                /*var queryStns = csvLayer.createQuery();
+                                queryStns.where = "*";
+                                queryStns.geometry = results[0];
+                                queryStns.distance = 0;
+                                queryStns.units = "meters";
+                                queryStns.spatialRelationship = "intersects";
+                                console.log(queryStns);
+                                csvLayer.queryFeatures(queryStns).then(queryResult);*/
+
                                 //geometryService.intersect([results[0]], csvLayer).then(intersectResults);
                             }
 
