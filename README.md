@@ -85,6 +85,7 @@ alt="Video" width="240" height="100" border="10" /></a>
 
 ## Data used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
+* City Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
 
 ## References
