@@ -98,25 +98,25 @@ The calculations that our web application uses were created under the several â€
 ## Data used
 * Electric vehicle charging stations data from: http://data.vancouver.ca/datacatalogue/index.htm
 * City Boundary from: http://data.vancouver.ca/datacatalogue/cityBoundary.htm
-* https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
+* List of electric vehicle options available in BC obtained from: https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/options.html
 
 
 ## References
-* http://vancouver.ca/green-vancouver/greenest-city-action-plan.aspx
+* http://www.autotrader.ca/newsfeatures/20170302/how-much-does-it-really-cost-to-charge-that-electric-vehicle/
 * https://www.bchydro.com/powersmart/electric-vehicles/charging/charging-at-home.html
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle/geography.html
 * https://www.bchydro.com/powersmart/electric-vehicles/owning-an-electric-vehicle.html
-* http://www.driveelectricmn.org/charging/
-* https://www.caa.ca/electric-vehicles/
-* http://www.autotrader.ca/newsfeatures/20170302/how-much-does-it-really-cost-to-charge-that-electric-vehicle/
-* http://www.cbc.ca/news/canada/british-columbia/electric-car-drivers-fees-charge-stations-1.4178795
+* https://www.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates.html
 * https://www.caa.ca/carcosts/
-* http://www.nextgreencar.com/
-* http://pacificanalytics.ca/sites/default/files/reports/Vehicle%20Greenhouse%20Gases%20to%202030%
-* http://www2.nrcan.gc.ca/eneene/sources/pripri/prices_bycity_e.cfm?productID=1&locationID=2&frequency=D&priceYear=2018&Redisplay=
+* https://www.caa.ca/electric-vehicles/
+* http://www.cbc.ca/news/canada/british-columbia/electric-car-drivers-fees-charge-stations-1.4178795
+* http://www.driveelectricmn.org/charging/
 * https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle
 * https://www.fueleconomy.gov/feg/Find.do?action=sbs&id=38557
-* https://www.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates.html
+* http://www.nextgreencar.com/
+* http://www2.nrcan.gc.ca/eneene/sources/pripri/prices_bycity_e.cfm?productID=1&locationID=2&frequency=D&priceYear=2018&Redisplay=
+* http://pacificanalytics.ca/sites/default/files/reports/Vehicle%20Greenhouse%20Gases%20to%202030%
+* http://vancouver.ca/green-vancouver/greenest-city-action-plan.aspx
 
 
 ## Free Assets used
