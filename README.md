@@ -10,6 +10,7 @@
 
 Check out <a href="https://alyshav.com/app/">goElectric</a> to view the live demo site! 
 
+To deploy this app locally, please read SETUP.md in this same folder.
 
 Notes: This app is best viewed in a desktop web browser. If you are on mobile, please select "Request Desktop Site" in your mobile web browser.
 
