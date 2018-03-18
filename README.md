@@ -28,7 +28,7 @@ The EV (Electric Vehicle) Range tool illustrates the maximum range achievable by
 
 ## Data Sources
 
-Data used in the creation of our web application came solely from open data sources. The locations of electric vehicle charging stations were obtained from the  <a href="http://vancouver.ca/your-government/open-data-catalogue.aspx">City of Vancouver’s Open Data Catalogue</a>. The calculations we used to calculate electricity costs and our comparisons with fuel costs & carbon dioxide emission was developed using a variety of sources which consisted of government sources & consultant reports (see “Calculation Explanations” section).
+Data used in the creation of our web application came solely from open data sources. The City of Vancouver's municipal boundary and the locations of electric vehicle charging stations were obtained from the  <a href="http://vancouver.ca/your-government/open-data-catalogue.aspx">City of Vancouver’s Open Data Catalogue</a>. The calculations we used to calculate electricity costs and our comparisons with fuel costs & carbon dioxide emission was developed using a variety of sources which consisted of government sources & consultant reports (see “Calculation Explanations” section).
 
 ## Calculations & Explanations
 
