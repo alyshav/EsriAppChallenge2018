@@ -77,9 +77,7 @@ The calculations that our web application uses were created under the several â€
 
 ## Video Submission
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
-" target="_blank"><img src="imgs/go-electric.png" 
-alt="Video" width="240" height="100" border="10" /></a>
+<a href="http://www.youtube.com/" target="_blank">goElectric Video Submission</a>
 
 ## Team
 * Anthony Lee: Lead Researcher
