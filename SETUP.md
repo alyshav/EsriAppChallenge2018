@@ -20,6 +20,6 @@ URGENT: The way we have this set up right now utilizes clientID/clientSecrets th
 Please contact alyshav@sfu.ca.
 
 
-### Resources for running local development web environments:
+### Resources for running local web development environments:
 * Windows web development environment http://www.wampserver.com/en/
 * VS code: https://code.visualstudio.com/
