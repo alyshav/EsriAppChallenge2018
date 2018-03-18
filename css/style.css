@@ -6,12 +6,12 @@ body {
 }
 
 .logo {
-    height: 35px;
+    height: 30px;
     margin-top: 5px;
 }
 
 .goelectric {
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .mapit {
@@ -20,6 +20,7 @@ body {
 }
 
 .bytext {
+    color: #707070;
     margin-left: 10px;
     margin-right: 5px;
 }

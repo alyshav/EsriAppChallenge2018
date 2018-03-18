@@ -20,6 +20,9 @@ body {
     margin-top: 2px;
 }
 
+button:hover{
+    background-image: linear-gradient(to top,transparent 96%,GREEN 2px);
+}
 a {
     color: #D24D57;
     font-weight: 600;
@@ -36,7 +39,7 @@ a:hover {
 .bytext {
     margin-left: 10px;
     margin-right: 10px;
-    color: lightgrey;
+    color: #707070;
 }
 
 .content {
