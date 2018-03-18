@@ -2,7 +2,7 @@
 ### Setup Instructions for the mapit.space submission
 
 ## Setup
-### URGENT: The way we have this set up right now utilizes clientID/clientSecrets that must be set up manually to work on your local web server. Please do not push proxy/PHP/proxy.config to the final submissions repository with the clientID/clientSecrets fields filled in.
+URGENT: The way we have this set up right now utilizes clientID/clientSecrets that must be set up manually to work on your local web server. Please do not push proxy/PHP/proxy.config to the final submissions repository with the clientID/clientSecrets fields filled in.
 
 1. Unzip the submission folder.
 2. Copy contents to the web server folder (will be denoted in subsequent steps as <www folder>).
