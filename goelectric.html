@@ -373,26 +373,19 @@
                       "esri/tasks/support/RouteParameters",
                       "esri/tasks/support/FeatureSet",
                       "esri/config",
-                      //"esri/widgets/Directions",
                       "esri/tasks/GeometryService",
                       "esri/tasks/support/LengthsParameters",
                       "esri/tasks/ServiceAreaTask",
                       "esri/tasks/support/ServiceAreaParameters",
-                      //"esri/layers/KMLLayer",
                       "esri/widgets/ScaleBar",
                       "esri/tasks/support/ServiceAreaSolveResult",
                       "esri/symbols/SimpleFillSymbol",
                       "esri/symbols/SimpleLineSymbol",
                       "esri/Color",
-                      //"esri/layers/MapImageLayer",
                       "esri/tasks/ClosestFacilityTask",
                       "esri/tasks/support/ClosestFacilityParameters",
                       "esri/request",
                       "esri/tasks/support/BufferParameters",
-                      //"esri/geometry/geometryEngine",
-                      //"esri/tasks/QueryTask",
-                      //"esri/tasks/support/Query",
-
       // Bootstrap
                       "bootstrap/Collapse",
                       "bootstrap/Dropdown",
@@ -423,25 +416,19 @@
                         RouteParameters,
                         FeatureSet,
                         config,
-                        //Directions,
                         GeometryService,
                         LengthsParameters,
                         ServiceAreaTask,
                         ServiceAreaParameters,
-                        //KMLLayer,
                         ScaleBar,
                         ServiceAreaSolveResult,
                         SimpleFillSymbol,
                         SimpleLineSymbol,
                         Color,
-                        //MapImageLayer,
                         ClosestFacilityTask,
                         ClosestFacilityParameters,
                         request,
                         BufferParameters
-                        //geometryEngine,
-                        //QueryTask,
-                        //Query
                       ) {
 
                         var distDriven = document.getElementById("distanceDriven");
@@ -888,17 +875,6 @@
                                 routeLyr.add(routeResult);
                                 bufferText.innerHTML = "Ready to calculate.";
                                 measureDistance(routeResult.geometry);
-                            }
-
-                            var directions = new Directions({
-                                view: app.mapView
-                            });
-                            function useDirections() {
-                                app.mapView.ui.add(directions, "top-right");
-                            }
-                            function closeDirections() {
-                                app.mapView.ui.remove(directions);
-                                directions.destroy();
                             }
 
                             //Clears all routes

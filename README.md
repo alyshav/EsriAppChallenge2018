@@ -5,6 +5,8 @@
 
 Check out <a href="https://alyshav.com/app/">goElectric</a> to view the live demo site!
 
+To deploy this app locally, please read setup.txt.
+
 ## Mission Statement
 
 The current paradigm of climate change mitigation has been heavily focused on eliminating the world’s dependence on fossil fuels and promoting cleaner air in major urban areas. The use of fossil fuels adds greenhouse gas emissions, exacerbating climate change processes. They also add several pollutants to the air, dirtying the air which can result in health complications for locals. In urban areas around the world, the use of gasoline-powered vehicles contributes significantly to these problems. Recognizing this, the City of Vancouver (BC) released the <a href="http://vancouver.ca/green-vancouver/greenest-city-action-plan.aspx">2020 Greenest City Action Plan</a> in 2012. The plan outlines 10 goals that the city will aim to reach by 2020 to become the ‘world’s greenest city’. Two of their goals (Goal 1 & 8) involve eliminating the city’s dependence on fossil fuels and to “breathe the cleanest air of any major city in the world.”
