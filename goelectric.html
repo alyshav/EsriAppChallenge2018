@@ -36,9 +36,10 @@
     </div>
     <!-- Nav -->
     <ul class="nav navbar-nav calcite-nav">
+        <!--
         <div class="calcite-navbar-search">
             <div id="searchWidgetDiv"></div>
-        </div>
+        </div>-->
         <li><a role="button" href="index.html" aria-haspopup="true"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
         <li><a role="button" href="goelectric.html" aria-haspopup="true"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;Explore</a></li>
     </ul>
@@ -74,7 +75,7 @@
             <div class="titlewell">Step 1: Savings Calculator</div>
         </div>
         <div class="well redwell">
-            The Savings Calculator provides annual approximations based on your selected Electric Vehicle (EV), specified route, and the number of round-trips you make between your home and destination per week. For example, if you drove to work each day, you would complete 5 round-trips per week. Scroll down to see all results!
+            The Savings Calculator is a tool for Vancouverites that provides annual approximations based on your selected Electric Vehicle (EV), specified route, and the number of round-trips you make between your home and destination per week. For example, if you drove to work 5 days per week, you would complete 5 round-trips per week. Scroll down to see all results!
         </div>        
         <div class="well bluewell drawpanel">                          
             <div class="wellheading">1) Select Electric Vehicle Model*</div>
@@ -118,7 +119,7 @@
             <span id="distanceDriven" class="totalsavingsvalue">0</span> km
         </div>    
         <div class="well greenwell">
-            <div class="subtext">Average Annual Cost to Charge this EV</div>
+            <div class="subtext">Average Annual Cost to Charge this EV in Vancouver, BC*</div>
             <span class="totalsavingsvalue">$<span id="aac">0</span></span>
             <div class="notetext"><i>*This is an approximate annual cost to charge this EV (excluding maintenance costs) to travel this route at the specified frequency annually. This value was calculated based on values from the <a href="https://www.caa.ca/carcosts/" target="_blank">CAA Driving Costs Calculator</a>.</i></div>            
         </div>
@@ -142,7 +143,7 @@
         </div>
         <div class="well redwell">
             When you're out and about in Vancouver*, this tool allows you to find nearby charging stations to top up.
-            After <b>planning your route in the Savings tab</b>, you can see how many charging stations are within a specified proximity to any point on your route!
+            After <b>planning your route in the Savings tab</b>, you can see how many charging stations are within your specified proximity to any point on your route!
             <div class="notetext"><i>*Please note that only charging stations within the City of Vancouver are shown. Click on a marker to see more information about each charging station.</i></div>
         </div>
         <div class="well bluewell">
@@ -193,8 +194,8 @@
             <div class="titlewell">Step 3: EV Range</div>
         </div>
         <div class="well redwell">
-            Have you ever wondered how far you can drive an EV on one charge? What if your EV wasn't charged completely? Could you get home?
-            This feature uses your selected EV's range to approximate how far you can travel with your specified battery state.
+            Have you ever wondered how far you can drive an EV on one charge? What if your EV wasn't charged completely? Could you get home or to a nearby charging station?
+            This feature aims to answer these questions by using your selected EV's range to approximate how far you can travel with your specified battery state.
         </div>
         <div class="well bluewell">
             <div class="wellheading">Current Electric Vehicle Selected*</div>
@@ -250,7 +251,7 @@
         </div>
         <div class="well redwell">
             <div class="wellheading">Note</div>            
-             <b>GoElectric</b> is best viewed in a desktop web browser. If you are on a mobile device, please select "Request desktop site."                     
+             <b>goElectric</b> is best viewed in a desktop web browser. If you are on a mobile device, please select "Request desktop site."                     
         </div>
         <div class="well redwell">
             <div class="wellheading">Change Base Map</div>
@@ -281,21 +282,21 @@
             <div class="titlewell">Help</div>
         </div>
         <div class="well redwell">
-            <div class="wellheading">How to use GoElectric</div>
+            <div class="wellheading">How to use goElectric</div>
             <p>
-                1) The <b>Savings</b> tab shows values computed based on the EV you select and the route you specify. Using the route distance and the number of round-trips you make, the average electricity economy can be computed.
-                The estimated annual CO<sub>2</sub> Emission is also provided for each Electric Vehicle (EV).
+                1) The <b>Savings Calculator</b> shows values computed based on the EV you select and the route you specify. Using the route distance and the number of round-trips you make, the Average Annual Cost to Charge the selected EV can be computed.
+                The estimated Average Annual Cost to Fuel a Gas-Fueled Vehicle in Vancouver and Average Annual CO2 Emissions of a Gas-Fueled Vehicle are also calculated based on your specified route.
             </p>
             <p>
-                2) The <b>Charging</b> tab shows nearby charging stations. Set a location marker and click "Find Charging Stations."
+                2) The <b>Charging Stations</b> feature helps users visualize charging stations within a specified proximity to their route. Once the route has been specified in the <b>Savings Calculator</b> tab, you can see how many round-trips you can make with the selected EV on 1 charge and click "Calculate Buffers" to highlight charging stations within the buffer range.
             </p>
             <p>
-                3) The <b>EV Range</b> tab shows the radial distance you can drive from a set point with a user-specified battery state. Adjust the battery state, set a location marker and click "Calculate Driving Distance" to get started!
+                3) The <b>EV Range</b> tab shows the maximum extents you can drive to from a set point with your specified battery state. Set a location marker, adjust the battery state, and click "Calculate EV Range" to get started!
             </p>
             <p>
                 <b>Charging Stations</b> are available throughout Vancouver. 
                 <a href="https://pluginbc.ca/charging-stations/public-charging/" target="_blank">Public charging stations</a> are important for topping up throughout the day while drivers are out and about. 
-                Click on the icons to view more information!
+                Click on the lightning bolt icons to view more information about each station!
             </p>
             </div>
             <div class="well redwell">
