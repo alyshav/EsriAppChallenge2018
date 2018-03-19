@@ -14,7 +14,7 @@ To deploy this app locally, please read SETUP.md in this same folder.
 
 Notes: 
 1. This app is best viewed in a desktop web browser. If you are on mobile, please select "Request Desktop Site" in your mobile web browser.
-2. We configured the Geometry Service in our web application to use the url: https://sampleserver6.arcgisonline.com/arcgis/rest/ since we do not have access to ArcGIS Server/Enterprise. Since we are using the sample service, our savings calculator results may not always propogate immediately. This sample server has limited use and should be swapped out with a dedicated server url. This change can be made in goelectric.html at line 502 following "new GeometryService". If the sample server is down, our Savings Calculator will not work and the server will return a 503 error.
+2. We configured the Geometry Service in our web application to use the url: https://sampleserver6.arcgisonline.com/arcgis/rest/ since we do not have access to ArcGIS Server/Enterprise. Since we are using the sample service, our savings calculator results may not always propagate changes immediately. This sample server has limited use and should be swapped out with a dedicated server url. This change can be made in goelectric.html at line 502 following "new GeometryService". If the sample server is down, our Savings Calculator will not work and the server will return a 503 error.
 
 
 ## Video Submission
