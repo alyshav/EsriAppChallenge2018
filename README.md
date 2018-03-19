@@ -12,7 +12,9 @@ Check out <a href="https://alyshav.com/app/">goElectric</a> to view the live dem
 
 To deploy this app locally, please read SETUP.md in this same folder.
 
-Note: This app is best viewed in a desktop web browser. If you are on mobile, please select "Request Desktop Site" in your mobile web browser.
+Notes: 
+1. This app is best viewed in a desktop web browser. If you are on mobile, please select "Request Desktop Site" in your mobile web browser.
+2. We configured the Geometry Service in our web application to use the url: https://sampleserver6.arcgisonline.com/arcgis/rest/ since we do not have access to ArcGIS Server/Enterprise. Since we are using the sample service, our savings calculator results may not always propogate immediately. This sample server has limited use and should be swapped out with a dedicated server url. This change can be made in goelectric.html at line 502 following "new GeometryService". If the sample server is down, our Savings Calculator will not work and the server will return a 503 error.
 
 
 ## Video Submission
@@ -92,6 +94,7 @@ The calculations that our web application uses were created under the several â€
 
 
 ## Known Issues
+* We configured the Geometry Service in our web application to use the url: https://sampleserver6.arcgisonline.com/arcgis/rest/ for the purpose of this project. This server has limited use and should be swapped out with a dedicated server url. This change can be made in goelectric.html at line 502.
 * In the Charging Stations tab, the intention was to query intersecting charging stations from the CSVLayer (https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-CSVLayer.html) with the buffer output geometry (https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-GeometryService.html#buffer). This was attempted with Query (https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-support-Query.html) and QueryTask (https://developers.arcgis.com/javascript/latest/api-reference/esri-tasks-QueryTask.html). However, this spatial relationship query (query.spatialRelationship = "intersects";) was not working as expected, resulting in the omission of this feature. The intended workflow was to allow the user to observe the outputted number of charging stations within the user-specified buffer distance in the "Charging Stations" tab, along with a change in appearance of the intersecting icons.
 
 
